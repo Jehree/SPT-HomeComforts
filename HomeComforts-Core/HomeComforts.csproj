@@ -125,17 +125,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\NeedsRatesReductions.cs" />
+    <Compile Include="Common\SafehouseAddonData.cs" />
+    <Compile Include="Common\SafehouseDataPack.cs" />
+    <Compile Include="Components\SafehouseAreaOfAffect.cs" />
+    <Compile Include="Components\SafehouseExfil.cs" />
+    <Compile Include="Components\ModSession.cs" />
+    <Compile Include="Components\SafehouseItem.cs" />
+    <Compile Include="Components\SpaceHeater.cs" />
     <Compile Include="Fika\FikaInterface.cs" />
     <Compile Include="Fika\FikaWrapper.cs" />
     <Compile Include="Helpers\ConfigurationManagerAttributes.cs" />
-    <Compile Include="Helpers\CustomExfilUtils.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Patches\GameEndedPatch.cs" />
     <Compile Include="Patches\GameStartedPatch.cs" />
-    <Compile Include="Patches\GetAvailableActionsPatch.cs" />
     <Compile Include="Patches\InitAllExfiltrationPointsPatch.cs" />
-    <Compile Include="Patches\OnExfilTriggerEntered.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,8 +151,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Components\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

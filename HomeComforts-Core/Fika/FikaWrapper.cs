@@ -15,6 +15,7 @@ namespace HomeComforts.Fika
 
         public static string GetRaidId()
         {
+
             return FikaBackendUtils.GroupId;
         }
 

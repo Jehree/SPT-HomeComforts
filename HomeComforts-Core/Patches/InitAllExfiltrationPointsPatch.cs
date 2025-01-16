@@ -1,14 +1,6 @@
-﻿using EFT;
-using EFT.Interactive;
-using HomeComforts.Helpers;
+﻿using HomeComforts.Components;
 using SPT.Reflection.Patching;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace HomeComforts.Patches
 {
@@ -19,16 +11,15 @@ namespace HomeComforts.Patches
             return typeof(ExfiltrationControllerClass).GetMethod(nameof(ExfiltrationControllerClass.InitAllExfiltrationPoints));
         }
 
-        [PatchPrefix]
-        private static void Prefix(MongoID locationId, LocationExitClass[] settings, ref ExfiltrationControllerClass __instance)
+        [PatchPostfix]
+        private static void Postfix(ref ExfiltrationControllerClass __instance)
         {
-            List<ExfiltrationPoint> exfils = LocationScene.GetAllObjects<ExfiltrationPoint>(false).ToList();
-            var customExfil = CustomExfilUtils.CreateExfil("test_exfil");
-            Plugin.LogSource.LogError($"collider enabled 2 {customExfil.gameObject.GetComponent<BoxCollider>().enabled}");
-            Plugin.ExfilPoint = customExfil;
-            exfils.Add(customExfil);
+            var customExfil = SafehouseExfil.Create("homecomforts_safehouse");
+            customExfil.InitCustomExfil();
 
-            __instance.ExfiltrationPoints = [..exfils];
+            ModSession.Instance.CustomSafehouseExfil = customExfil;
+
+            __instance.ExfiltrationPoints = [.. __instance.ExfiltrationPoints, ModSession.Instance.CustomSafehouseExfil];
         }
     }
 }

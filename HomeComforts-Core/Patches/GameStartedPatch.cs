@@ -1,11 +1,7 @@
-﻿using Comfort.Common;
-using EFT;
-using EFT.Interactive;
-using HomeComforts.Fika;
-using HomeComforts.Helpers;
+﻿using EFT;
+using HomeComforts.Components;
 using SPT.Reflection.Patching;
 using System.Reflection;
-using UnityEngine;
 
 namespace HomeComforts.Patches
 {
@@ -19,10 +15,6 @@ namespace HomeComforts.Patches
         [PatchPrefix]
         static void PatchPrefix()
         {
-            //Plugin.ExfilPoint.Settings.EntryPoints = Singleton<GameWorld>.Instance.MainPlayer.Profile.Info.EntryPoint.ToLower();
-            Plugin.ExfilPoint.EligibleEntryPoints = [Singleton<GameWorld>.Instance.MainPlayer.Profile.Info.EntryPoint.ToLower()];
-            Plugin.LogSource.LogError($"collider enabled 3 {Plugin.ExfilPoint.gameObject.GetComponent<BoxCollider>().enabled}");
-
         }
     }
 }

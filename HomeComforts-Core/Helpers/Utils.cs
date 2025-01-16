@@ -89,5 +89,33 @@ namespace HomeComforts.Helpers
 
             return RequestHandler.PutJson(url, json);
         }
+
+        public static Mesh GetInvertedMesh(Mesh mesh)
+        {
+            // Get the original vertices and triangles
+            Vector3[] vertices = mesh.vertices;
+            int[] triangles = mesh.triangles;
+
+            // Flip the triangles (reverse the winding order)
+            for (int i = 0; i < triangles.Length; i += 3)
+            {
+                int temp = triangles[i];
+                triangles[i] = triangles[i + 1];
+                triangles[i + 1] = temp;
+            }
+
+            Mesh newMesh = GameObject.Instantiate(mesh);
+
+            // Set the flipped triangles back to the mesh
+            newMesh.triangles = triangles;
+
+            // Optionally, recalculate the normals, as they will likely be wrong after flipping the triangles
+            newMesh.RecalculateNormals();
+
+            // Optionally, recalculate the bounds for proper rendering
+            newMesh.RecalculateBounds();
+
+            return newMesh;
+        }
     }
 }
