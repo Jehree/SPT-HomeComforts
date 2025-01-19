@@ -4,6 +4,8 @@ using BepInEx.Logging;
 using HomeComforts.Components;
 using HomeComforts.Fika;
 using HomeComforts.Helpers;
+using HomeComforts.Items.Safehouse;
+using HomeComforts.Items.SpaceHeater;
 using HomeComforts.Patches;
 using LeaveItThere.Helpers;
 using System.Collections.Generic;
@@ -28,7 +30,7 @@ namespace HomeComforts
             FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
             IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
             ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient);
-            
+
             LogSource = Logger;
             Settings.Init(Config);
 
@@ -36,10 +38,10 @@ namespace HomeComforts
             new GameEndedPatch().Enable();
             new InitAllExfiltrationPointsPatch().Enable();
 
-            LeaveItThereStaticEvents.OnFakeItemInitialized += SafehouseItem.OnFakeItemInitialized;
+            LeaveItThereStaticEvents.OnFakeItemInitialized += Safehouse.OnFakeItemInitialized;
             LeaveItThereStaticEvents.OnFakeItemInitialized += SpaceHeater.OnFakeItemInitialized;
-            LeaveItThereStaticEvents.OnLastPlacedItemSpawned += ModSession.OnLastPlacedItemSpawned;
-            LeaveItThereStaticEvents.OnHostRaidEnd += ModSession.OnHostRaidEnd;
+            LeaveItThereStaticEvents.OnLastPlacedItemSpawned += HCSession.OnLastPlacedItemSpawned;
+            LeaveItThereStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
         }
 
         private void OnEnable()

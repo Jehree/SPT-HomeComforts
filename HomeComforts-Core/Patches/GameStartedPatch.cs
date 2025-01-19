@@ -1,5 +1,4 @@
 ﻿using EFT;
-using HomeComforts.Components;
 using SPT.Reflection.Patching;
 using System.Reflection;
 
@@ -15,6 +14,7 @@ namespace HomeComforts.Patches
         [PatchPrefix]
         static void PatchPrefix()
         {
+
         }
     }
 }

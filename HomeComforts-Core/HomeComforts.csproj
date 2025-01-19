@@ -125,19 +125,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\NeedsRatesReductions.cs" />
-    <Compile Include="Common\SafehouseAddonData.cs" />
-    <Compile Include="Common\SafehouseDataPack.cs" />
-    <Compile Include="Components\SafehouseAreaOfAffect.cs" />
-    <Compile Include="Components\SafehouseExfil.cs" />
-    <Compile Include="Components\ModSession.cs" />
-    <Compile Include="Components\SafehouseItem.cs" />
-    <Compile Include="Components\SpaceHeater.cs" />
+    <Compile Include="Items\Safehouse\SafehouseSession.cs" />
+    <Compile Include="Items\SpaceHeater\NeedsRateReductions.cs" />
+    <Compile Include="Items\Safehouse\SafehouseAddonData.cs" />
+    <Compile Include="Items\Safehouse\SafehouseExfil.cs" />
+    <Compile Include="Components\HCSession.cs" />
+    <Compile Include="Items\Safehouse\Safehouse.cs" />
+    <Compile Include="Items\SpaceHeater\SpaceHeater.cs" />
     <Compile Include="Fika\FikaInterface.cs" />
     <Compile Include="Fika\FikaWrapper.cs" />
+    <Compile Include="Items\Safehouse\SafehouseFikaWrapper.cs" />
+    <Compile Include="Items\SpaceHeater\SpaceHeaterAddonData.cs" />
+    <Compile Include="Items\SpaceHeater\SpaceHeaterFikaWrapper.cs" />
     <Compile Include="Helpers\ConfigurationManagerAttributes.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Items\SpaceHeater\SpaceHeaterSession.cs" />
     <Compile Include="Patches\GameEndedPatch.cs" />
     <Compile Include="Patches\GameStartedPatch.cs" />
     <Compile Include="Patches\InitAllExfiltrationPointsPatch.cs" />
@@ -150,9 +153,7 @@
       <Name>HomeComforts-Packets</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)\..\..\..\BepInEx\plugins\HomeComforts\$(TargetFileName)"</PostBuildEvent>

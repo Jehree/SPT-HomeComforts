@@ -3,10 +3,14 @@ using Fika.Core.Coop.Utils;
 using Fika.Core.Modding;
 using Fika.Core.Modding.Events;
 using Fika.Core.Networking;
+using HomeComforts.Items.Safehouse;
+using HomeComforts.Items.SpaceHeater;
+using LiteNetLib;
+using LockableDoors.Packets;
 
 namespace HomeComforts.Fika
 {
-    public class FikaWrapper
+    public static class FikaWrapper
     {
         public static bool IAmHost()
         {
@@ -21,7 +25,9 @@ namespace HomeComforts.Fika
 
         public static void OnFikaNetManagerCreated(FikaNetworkManagerCreatedEvent managerCreatedEvent)
         {
-            //managerCreatedEvent.Manager.RegisterPacket<DoorLockedStatePacket, NetPeer>(OnDoorLockedStatePacketReceived);
+            managerCreatedEvent.Manager.RegisterPacket<SafehouseProfileDataPacket, NetPeer>(SafehouseFikaWrapper.OnSafehouseProfileDataPacketReceived);
+            managerCreatedEvent.Manager.RegisterPacket<SafehouseEnabledStatePacket, NetPeer>(SafehouseFikaWrapper.OnSafehouseEnabledStatePacketReceived);
+            managerCreatedEvent.Manager.RegisterPacket<SpaceHeaterStatePacket, NetPeer>(SpaceHeaterFikaWrapper.OnSpaceHeaterStatePacketReceived);
         }
 
         public static void InitOnPluginEnabled()

@@ -1,5 +1,4 @@
-﻿using HomeComforts.Components;
-using SPT.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
 using System.Reflection;
 
 namespace HomeComforts.Patches
@@ -14,12 +13,7 @@ namespace HomeComforts.Patches
         [PatchPostfix]
         private static void Postfix(ref ExfiltrationControllerClass __instance)
         {
-            var customExfil = SafehouseExfil.Create("homecomforts_safehouse");
-            customExfil.InitCustomExfil();
-
-            ModSession.Instance.CustomSafehouseExfil = customExfil;
-
-            __instance.ExfiltrationPoints = [.. __instance.ExfiltrationPoints, ModSession.Instance.CustomSafehouseExfil];
+            SafehouseSession.InitializeCustomExfil(__instance);
         }
     }
 }

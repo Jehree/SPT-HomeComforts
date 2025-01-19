@@ -1,21 +1,15 @@
-﻿using HomeComforts.Common;
+﻿using HomeComforts.Components;
 using HomeComforts.Fika;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
 using LeaveItThere.Helpers;
 using UnityEngine;
 
-namespace HomeComforts.Components
+namespace HomeComforts.Items.Safehouse
 {
-    public class TestClass
-    {
-        public Vector3 PlayerPos = ModSession.Instance.Player.gameObject.transform.position;
-    }
-
-    internal class SafehouseItem : MonoBehaviour
+    internal class Safehouse : MonoBehaviour
     {
         public FakeItem FakeItem { get; private set; }
-        public SafehouseAreaOfAffect AOE { get; private set; }
         public bool SafehouseEnabled = false;
 
         private SafehouseAddonData _addonData;
@@ -47,7 +41,7 @@ namespace HomeComforts.Components
             if (!isPlaced)
             {
                 SetSafehouseEnabled(false);
-                ModSession.Instance.RemoveSafehouseItem(this);
+                HCSession.Instance.SafehouseSession.RemoveSafehouse(this);
             }
         }
 
@@ -62,18 +56,16 @@ namespace HomeComforts.Components
         public static void OnFakeItemInitialized(FakeItem fakeItem)
         {
             if (!Plugin.ServerConfig.SafehouseItemIds.Contains(fakeItem.LootItem.Item.TemplateId)) return;
-
-            var safehouseItem = fakeItem.gameObject.AddComponent<SafehouseItem>();
-            safehouseItem.Init(fakeItem);
-            safehouseItem.AOE = SafehouseAreaOfAffect.ApplyAOEObjectToSafehouseItem(safehouseItem);
-            fakeItem.Actions.Add(GetToggleSafehouseItemEnabledAction(fakeItem.ItemId));
-            fakeItem.Actions.Add(SafehouseAreaOfAffect.GetToggleAOEBoundsVisibleAction(fakeItem.ItemId));
+            var safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
+            safehouse.Init(fakeItem);
+            fakeItem.Actions.Add(GetToggleSafehouseEnabledAction(fakeItem.ItemId));
             fakeItem.Actions.Add(GetEnableExfilInteractionAction(fakeItem.ItemId));
+            fakeItem.gameObject.transform.localScale *= 2;
         }
         private void Init(FakeItem fakeItem)
         {
             FakeItem = fakeItem;
-            ModSession.Instance.AddSafehouseItem(this);
+            HCSession.Instance.SafehouseSession.AddSafehouse(this);
 
             FakeItem.OnPlacedStateChanged += OnPlacedStateChanged;
             FakeItem.OnSpawned += OnPlacedItemSpawned;
@@ -83,45 +75,31 @@ namespace HomeComforts.Components
         {
             if (enabled == SafehouseEnabled) return;
             SafehouseEnabled = enabled;
-            AOE.AOEEnabled = enabled;
             FakeItem.AddonFlags.MoveModeDisabled = enabled;
 
             if (enabled)
             {
-                if (FikaInterface.IAmHost())
-                {
-                    AddonData.AddProfileId();
-                }
-                else
-                {
-                    // handle FikaClient(s)
-                }
+                AddonData.AddProfileId();
             }
             else
             {
-                ModSession.Instance.CustomSafehouseExfil.SetCustomExfilEnabled(false);
-                if (FikaInterface.IAmHost())
-                {
-                    AddonData.RemoveProfileId();
-                }
-                else
-                {
-                    // handle FikaClient(s)
-                }
+                HomeComforts.Components.HCSession.Instance.CustomSafehouseExfil.SetCustomExfilEnabled(false);
+                AddonData.RemoveProfileId();
             }
 
+            FikaInterface.SendSafehouseEnabledStatePacket(enabled, FakeItem.LootItem.ItemId);
             NotificationManagerClass.DisplayMessageNotification($"Safehouse Enabled: {SafehouseEnabled}");
             InteractionHelper.RefreshPrompt();
         }
 
-        private static CustomInteraction GetToggleSafehouseItemEnabledAction(string itemId)
+        private static CustomInteraction GetToggleSafehouseEnabledAction(string itemId)
         {
             return new CustomInteraction(
                 () =>
                 {
-                    var safehouseItem = ModSession.Instance.GetSafehouseItemOrNull(itemId);
+                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
 
-                    if (safehouseItem.SafehouseEnabled)
+                    if (safehouse.SafehouseEnabled)
                     {
                         return "Disable Safehouse";
                     }
@@ -132,14 +110,14 @@ namespace HomeComforts.Components
                 },
                 () =>
                 {
-                    var safehouseItem = ModSession.Instance.GetSafehouseItemOrNull(itemId);
-                    if (safehouseItem.SafehouseEnabled) return false; //always enable interaction when safehouse is enabled so that it can be disabled
-                    return !ModSession.Instance.SafehouseEnableAllowed;
+                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    if (safehouse.SafehouseEnabled) return false; //always enable interaction when safehouse is enabled so that it can be disabled
+                    return !HCSession.Instance.SafehouseSession.SafehouseEnableAllowed;
                 },
                 () =>
                 {
-                    var safehouseItem = ModSession.Instance.GetSafehouseItemOrNull(itemId);
-                    safehouseItem.SetSafehouseEnabled(!safehouseItem.SafehouseEnabled);
+                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    safehouse.SetSafehouseEnabled(!safehouse.SafehouseEnabled);
                 }
             );
         }
@@ -152,7 +130,7 @@ namespace HomeComforts.Components
             (
                 () =>
                 {
-                    if (ModSession.Instance.CustomSafehouseExfil.ExfilIsEnabled)
+                    if (HCSession.Instance.CustomSafehouseExfil.ExfilIsEnabled)
                     {
                         return "Stop Extracting";
                     }
@@ -163,19 +141,23 @@ namespace HomeComforts.Components
                 },
                 () =>
                 {
-                    var safehouseItem = ModSession.Instance.GetSafehouseItemOrNull(itemId);
-                    return !safehouseItem.SafehouseEnabled;
+                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    return !safehouse.SafehouseEnabled;
                 },
                 () =>
                 {
-                    var exfil = ModSession.Instance.CustomSafehouseExfil;
+                    var exfil = HCSession.Instance.CustomSafehouseExfil;
+
                     exfil.SetCustomExfilEnabled(!exfil.ExfilIsEnabled);
 
                     if (exfil.ExfilIsEnabled)
                     {
-                        exfil.gameObject.transform.position = ModSession.Instance.Player.gameObject.transform.position;
-                        exfil.LastSafehouseItemThatUsedMe = ModSession.Instance.GetSafehouseItemOrNull(itemId);
+                        exfil.gameObject.transform.position = HCSession.Instance.Player.gameObject.transform.position;
+                        exfil.LastSafehouseThatUsedMe = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
                     }
+
+                    // extraction is instant with Fika
+                    FikaInterface.Extract(exfil);
                 }
             );
         }

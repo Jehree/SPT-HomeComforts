@@ -22,7 +22,7 @@ class Mod implements IPreSptLoadMod, IPostDBLoadMod {
     public preSptLoad(container: DependencyContainer): void {
         this.Helper.init(container, InitStage.PRE_SPT_LOAD);
 
-        this.Helper.registerStaticRoute(this.ConfigToServer, "HomeComforts-ConfigToClient", Routes.onConfigToServer, Routes, true);
+        this.Helper.registerStaticRoute(this.ConfigToServer, "HomeComforts-ConfigToClient", Routes.onConfigToClient, Routes, true);
     }
 
     public postDBLoad(container: DependencyContainer): void {
@@ -99,7 +99,7 @@ class Mod implements IPreSptLoadMod, IPostDBLoadMod {
 }
 
 export class Routes {
-    public static onConfigToServer(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {
+    public static onConfigToClient(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {
         return JSON.stringify(Config);
     }
 }

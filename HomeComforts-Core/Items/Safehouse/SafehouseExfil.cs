@@ -1,12 +1,13 @@
 ﻿using EFT;
 using EFT.Interactive;
+using HomeComforts.Items.Safehouse;
 using UnityEngine;
 
 namespace HomeComforts.Components
 {
     internal class SafehouseExfil : ExfiltrationPoint
     {
-        public SafehouseItem LastSafehouseItemThatUsedMe;
+        public Safehouse LastSafehouseThatUsedMe;
         public BoxCollider Collider { get; private set; }
         public bool ExfilIsEnabled
         {
@@ -72,7 +73,7 @@ namespace HomeComforts.Components
 
             if (enabled && EligibleEntryPoints.IsNullOrEmpty())
             {
-                EligibleEntryPoints = [ModSession.Instance.Player.Profile.Info.EntryPoint.ToLower()];
+                EligibleEntryPoints = [HCSession.Instance.Player.Profile.Info.EntryPoint.ToLower()];
             }
         }
     }

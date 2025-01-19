@@ -1,14 +1,14 @@
-﻿using HomeComforts.Helpers;
+﻿using Comfort.Common;
+using EFT.UI;
+using HomeComforts.Components;
+using HomeComforts.Fika;
+using HomeComforts.Helpers;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LeaveItThere.Helpers;
 using UnityEngine;
 
-namespace HomeComforts.Components
+namespace HomeComforts.Items.SpaceHeater
 {
     internal class SpaceHeater : MonoBehaviour, IPhysicsTrigger
     {
@@ -31,42 +31,53 @@ namespace HomeComforts.Components
         public static void OnFakeItemInitialized(FakeItem fakeItem)
         {
             if (!Plugin.ServerConfig.SpaceHeaterItemIds.Contains(fakeItem.LootItem.Item.TemplateId)) return;
-            
+
             var heater = AddSpaceHeaterBehavior(fakeItem);
-            ModSession.Instance.SpaceHeater.SpaceHeaters.Add(heater);
+            HCSession.Instance.SpaceHeaterSession.SpaceHeaters.Add(heater);
             fakeItem.OnPlacedStateChanged += heater.OnItemPlacedStateChanged;
+
+            fakeItem.Actions.Add(GetToggleSpaceHeaterAction(fakeItem.ItemId));
+
+            SpaceHeaterAddonData addonData = fakeItem.GetAddonDataOrNull<SpaceHeaterAddonData>(Plugin.AddonDataKey);
+            Plugin.LogSource.LogError($"heater data is null: {addonData == null}");
+            Plugin.LogSource.LogError($"heater is enabled: {addonData.HeaterEnabled}");
+            if (addonData != null && addonData.HeaterEnabled)
+            {
+                heater.AOEEnabled = true;
+            }
         }
 
         private void OnItemPlacedStateChanged(bool isPlaced)
         {
             if (isPlaced) return;
-            ModSession.Instance.SpaceHeater.SpaceHeaters.Remove(this);
+            HCSession.Instance.SpaceHeaterSession.SpaceHeaters.Remove(this);
+            AOEEnabled = false;
         }
 
         public void OnTriggerEnter(Collider collider)
         {
-            if (ModSession.Instance.GameWorld.GetPlayerByCollider(collider) != ModSession.Instance.Player) return;
+            if (HCSession.Instance.GameWorld.GetPlayerByCollider(collider) != HCSession.Instance.Player) return;
 
             // add buff if player wasn't in any zone prior to this one
-            if (ModSession.Instance.SpaceHeater.PlayerIsInSpaceHeaterZone == false)
+            if (HCSession.Instance.SpaceHeaterSession.PlayerIsInSpaceHeaterZone == false)
             {
-                ModSession.Instance.NeedsRateReductions.SetEnabled(true);
+                HCSession.Instance.NeedsRateReductions.SetEnabled(true);
                 NotificationManagerClass.DisplayMessageNotification("Comfort Buff Active!");
             }
 
-            ModSession.Instance.SpaceHeater.AddSpaceHeaterIdToPlayerIsIn(FakeItem.ItemId);
+            HCSession.Instance.SpaceHeaterSession.AddSpaceHeaterIdToPlayerIsIn(FakeItem.ItemId);
         }
 
         public void OnTriggerExit(Collider collider)
         {
-            if (ModSession.Instance.GameWorld.GetPlayerByCollider(collider) != ModSession.Instance.Player) return;
+            if (HCSession.Instance.GameWorld.GetPlayerByCollider(collider) != HCSession.Instance.Player) return;
 
-            ModSession.Instance.SpaceHeater.RemoveSpaceHeaterIdFromPlayerIsIn(FakeItem.ItemId);
+            HCSession.Instance.SpaceHeaterSession.RemoveSpaceHeaterIdFromPlayerIsIn(FakeItem.ItemId);
 
             // remove buff if after exiting the zone the player is still not in any other zone
-            if (ModSession.Instance.SpaceHeater.PlayerIsInSpaceHeaterZone == false)
+            if (HCSession.Instance.SpaceHeaterSession.PlayerIsInSpaceHeaterZone == false)
             {
-                ModSession.Instance.NeedsRateReductions.SetEnabled(false);
+                HCSession.Instance.NeedsRateReductions.SetEnabled(false);
                 NotificationManagerClass.DisplayWarningNotification("Comfort Buff Removed.");
             }
         }
@@ -101,20 +112,33 @@ namespace HomeComforts.Components
             return new CustomInteraction(
                 () =>
                 {
-                    if (ModSession.Instance.SpaceHeater.SpaceHeaterIsEnabled(itemId))
+                    if (HCSession.Instance.SpaceHeaterSession.SpaceHeaterIsEnabled(itemId))
                     {
-                        return "Disable";
+                        return "Turn Off";
                     }
                     else
                     {
-                        return "Enable";
+                        return "Turn On";
                     }
                 },
                 false,
                 () =>
                 {
-                    var heater = ModSession.Instance.SpaceHeater.GetSpaceHeaterOrNull(itemId);
+                    var heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(itemId);
                     heater.AOEEnabled = !heater.AOEEnabled;
+
+                    if (heater.AOEEnabled)
+                    {
+                        Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOn);
+                    }
+                    else
+                    {
+                        Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOff);
+                    }
+
+                    InteractionHelper.RefreshPrompt();
+                    FikaInterface.SendSpaceHeaterStatePacket(heater.AOEEnabled, itemId);
+                    heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(heater.AOEEnabled));
                 }
             );
         }
