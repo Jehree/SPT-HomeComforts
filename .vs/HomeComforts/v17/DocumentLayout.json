@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\items\\spaceheater\\spaceheaterfikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheaterfikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\spaceheater\\spaceheateraddondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheateraddondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\items\\spaceheater\\spaceheateraddondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheateraddondata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\spaceheater\\spaceheaterfikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheaterfikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SpaceHeaterFikaWrapper.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterFikaWrapper.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterFikaWrapper.cs",
@@ -34,12 +34,11 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterFikaWrapper.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAvwCwAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-19T01:23:42.186Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-19T01:23:42.186Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "SpaceHeaterAddonData.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterAddonData.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterAddonData.cs",
@@ -58,7 +57,7 @@
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeater.cs",
               "ToolTip": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeater.cs",
               "RelativeToolTip": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeater.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAABAAAA",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwC4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-19T00:27:09.278Z",
               "EditorCaption": ""

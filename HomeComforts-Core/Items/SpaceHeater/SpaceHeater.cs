@@ -39,8 +39,6 @@ namespace HomeComforts.Items.SpaceHeater
             fakeItem.Actions.Add(GetToggleSpaceHeaterAction(fakeItem.ItemId));
 
             SpaceHeaterAddonData addonData = fakeItem.GetAddonDataOrNull<SpaceHeaterAddonData>(Plugin.AddonDataKey);
-            Plugin.LogSource.LogError($"heater data is null: {addonData == null}");
-            Plugin.LogSource.LogError($"heater is enabled: {addonData.HeaterEnabled}");
             if (addonData != null && addonData.HeaterEnabled)
             {
                 heater.AOEEnabled = true;
