@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 namespace HomeComforts
 {
+    [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.0")]
     public class Plugin : BaseUnityPlugin
@@ -20,16 +21,18 @@ namespace HomeComforts
         public static bool IAmDedicatedClient { get; private set; }
         public static ManualLogSource LogSource;
         public static ServerConfig ServerConfig;
+        public static List<string> AllEntryPoints;
 
         public const string ConfigToClient = "/jehree/home_comforts/config_to_client";
+        public const string GetAllEntryPoints = "/jehree/home_comforts/get_all_entry_points";
         public const string AddonDataKey = "Jehree.HomeComforts";
-
 
         private void Awake()
         {
             FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
             IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
             ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient);
+            AllEntryPoints = Utils.ServerRoute<List<string>>(GetAllEntryPoints);
 
             LogSource = Logger;
             Settings.Init(Config);

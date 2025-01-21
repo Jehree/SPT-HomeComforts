@@ -38,12 +38,6 @@ namespace HomeComforts.Fika
             SpaceHeaterFikaWrapper.SendSpaceHeaterStatePacket(enabled, spaceHeaterId);
         }
 
-        public static void Extract(ExfiltrationPoint exfil)
-        {
-            if (!Plugin.FikaInstalled) return;
-            SafehouseFikaWrapper.Extract(exfil);
-        }
-
         public static void SendSafehouseEnabledStatePacket(bool enabled, string safehouseId)
         {
             if (!Plugin.FikaInstalled) return;

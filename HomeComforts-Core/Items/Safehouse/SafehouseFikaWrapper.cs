@@ -91,12 +91,5 @@ namespace HomeComforts.Items.Safehouse
                 safehouse.AddonData.RemoveProfileId(packet.ProfileId);
             }
         }
-
-        public static void Extract(ExfiltrationPoint exfil)
-        {
-            SafehouseSession.SafehouseExtractBehavior("homecomforts_safehouse");
-            CoopGame coopGame = (CoopGame)Singleton<IFikaGame>.Instance;
-            coopGame.Extract((CoopPlayer)HCSession.Instance.Player, HCSession.Instance.CustomSafehouseExfil);
-        }
     }
 }

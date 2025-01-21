@@ -157,7 +157,7 @@ namespace HomeComforts.Items.Safehouse
                     }
 
                     // extraction is instant with Fika
-                    FikaInterface.Extract(exfil);
+                    //FikaInterface.Extract(exfil);
                 }
             );
         }

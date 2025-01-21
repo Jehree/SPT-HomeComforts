@@ -84,15 +84,23 @@ internal class SafehouseSession
 
     public static void OnRaidEnd(LocalRaidSettings settings, object results, object lostInsuredItems, object transferItems, string exitName)
     {
-        if (!Plugin.FikaInstalled)
-        {
-            SafehouseExtractBehavior(exitName);
-        }
+        bool profileCleanupNeeded = exitName != "homecomforts_safehouse" && !Settings.AlwaysInfilAtSafehouse.Value;
 
-        if (!exitName.IsNullOrEmpty() && exitName != "homecomforts_safehouse" && !Settings.AlwaysInfilAtSafehouse.Value)
+        if (FikaInterface.IAmHost())
         {
-            _session.AddonData.RemoveProfile();
-            FikaInterface.SendHostSafehouseProfileDataPacket(true);
+            if (exitName == "homecomforts_safehouse")
+            {
+                _session.AddonData.AddProfile();
+            }
+            
+            if (profileCleanupNeeded)
+            {
+                _session.AddonData.RemoveProfile();
+            }
+        }
+        else
+        {
+            FikaInterface.SendHostSafehouseProfileDataPacket(profileCleanupNeeded);
         }
     }
 
@@ -106,22 +114,6 @@ internal class SafehouseSession
         exfilController.ExfiltrationPoints = [.. exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
     }
 
-    public static void SafehouseExtractBehavior(string exitName)
-    {
-        if (FikaInterface.IAmHost())
-        {
-            if (exitName == "homecomforts_safehouse")
-            {
-                // always add profile if we exfil'd at a safehosue
-                _session.AddonData.AddProfile();
-            }
-        }
-        else
-        {
-            FikaInterface.SendHostSafehouseProfileDataPacket(false);
-        }
-    }
-
     public static void OnLastPlacedItemSpawned(FakeItem fakeItem)
     {
         // Once the last placed item is spawned, it is safe to check if a safehouse item exists
@@ -132,7 +124,7 @@ internal class SafehouseSession
 
         Safehouse safehouse = _session.GetSafehouseOrNull(profileData.SafehouseId);
 
-        if (safehouse != null && safehouse.SafehouseEnabled)
+        if (safehouse != null && safehouse.SafehouseEnabled) 
         {
             HCSession.Instance.Player.Teleport(profileData.InfilPosition);
         }

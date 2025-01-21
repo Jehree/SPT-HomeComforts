@@ -1,4 +1,5 @@
-﻿using EFT;
+﻿using Comfort.Common;
+using EFT;
 using EFT.Interactive;
 using HomeComforts.Items.Safehouse;
 using UnityEngine;
@@ -50,8 +51,7 @@ namespace HomeComforts.Components
                 // We could add the EntryPoints here, but that would make the exfil show up in the available exfils list.
                 // Instead, we add them at the time that the exfil is enabled. This works as expected but keeps the exfil name out
                 // of the available exfils list.
-                //EntryPoints = Singleton<GameWorld>.Instance.MainPlayer.Profile.Info.EntryPoint.ToLower(),
-                EntryPoints = "",
+                EntryPoints = string.Join(",", Plugin.AllEntryPoints),
                 ExfiltrationType = EExfiltrationType.Individual,
                 ExfiltrationTime = 7f,
                 PlayersCount = 0,

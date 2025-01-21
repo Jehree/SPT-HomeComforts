@@ -33,7 +33,6 @@ namespace HomeComforts.Patches
         [PatchPostfix]
         static void Postfix(LocalRaidSettings settings, object results, ref object[] lostInsuredItems, object transferItems)
         {
-
         }
     }
 }
