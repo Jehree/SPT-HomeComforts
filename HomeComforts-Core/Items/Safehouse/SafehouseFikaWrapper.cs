@@ -29,6 +29,9 @@ namespace HomeComforts.Items.Safehouse
             }
             else
             {
+                // if there LastSafehouseThatUsedMe is null, there's nothing to update
+                if (HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe == null) return;
+
                 packet = new SafehouseProfileDataPacket
                 {
                     ProfileId = HCSession.Instance.Player.ProfileId,

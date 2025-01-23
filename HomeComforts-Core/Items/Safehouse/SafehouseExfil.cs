@@ -8,7 +8,7 @@ namespace HomeComforts.Components
 {
     internal class SafehouseExfil : ExfiltrationPoint
     {
-        public Safehouse LastSafehouseThatUsedMe;
+        public Safehouse LastSafehouseThatUsedMe = null;
         public BoxCollider Collider { get; private set; }
         public bool ExfilIsEnabled
         {
