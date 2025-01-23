@@ -2,7 +2,8 @@ import { DependencyContainer } from "tsyringe";
 import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
 import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
 import { FileUtils, InitStage, ModHelper } from "./mod_helper";
-import Config from "../config.json";
+import { ServerConfig } from "./types";
+import _config from "../config.json";
 import { ITemplateItem } from "@spt/models/eft/common/tables/ITemplateItem";
 import _dbItems from "../db/simple_item_db.json";
 import { SimpleItem } from "./types";
@@ -10,6 +11,7 @@ import { IBarterScheme } from "@spt/models/eft/common/tables/ITrader";
 import { IItem } from "@spt/models/eft/common/tables/IItem";
 import { ILocation } from "@spt/models/eft/common/ILocation";
 const DbItems = _dbItems as SimpleItem[];
+const Config = _config as ServerConfig;
 
 // unheard radio bundle path: "assets/content/items/equipment/item_equipment_radio_h4855/item_equipment_radio_h4855.bundle"
 
@@ -41,7 +43,12 @@ class Mod implements IPreSptLoadMod, IPostDBLoadMod {
     }
 
     static onConfigToClient(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {
-        return JSON.stringify(Config);
+        const data = JSON.parse(JSON.stringify(info)) as ServerConfig;
+
+        data.SafehouseItemIds.push(...Config.SafehouseItemIds);
+        data.SpaceHeaterItemIds.push(...Config.SpaceHeaterItemIds);
+
+        return JSON.stringify(data);
     }
 
     static getAllEntryPointsString(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {

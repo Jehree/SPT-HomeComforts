@@ -20,7 +20,7 @@ namespace HomeComforts
         public static bool FikaInstalled { get; private set; }
         public static bool IAmDedicatedClient { get; private set; }
         public static ManualLogSource LogSource;
-        public static ServerConfig ServerConfig;
+        public static ServerConfig ServerConfig = new();
         public static List<string> AllEntryPoints;
 
         public const string ConfigToClient = "/jehree/home_comforts/config_to_client";
@@ -31,7 +31,7 @@ namespace HomeComforts
         {
             FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
             IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
-            ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient);
+            ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient, ServerConfig);
             AllEntryPoints = Utils.ServerRoute<List<string>>(GetAllEntryPoints);
 
             LogSource = Logger;
@@ -53,9 +53,17 @@ namespace HomeComforts
         }
     }
 
-    public struct ServerConfig
+    public struct LayerSetterInfo
     {
-        public List<string> SafehouseItemIds;
-        public List<string> SpaceHeaterItemIds;
+        public string TemplateId;
+        public List<string> GameobjectNames;
+        string LayerName;
+    }
+
+    public class ServerConfig
+    {
+        public List<string> SafehouseItemIds = [];
+        public List<string> SpaceHeaterItemIds = [];
+        public List<LayerSetterInfo> LayerSetterInfoList = [];
     }
 }

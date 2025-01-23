@@ -49,6 +49,9 @@ namespace HomeComforts.Items.Safehouse
         {
             if (AddonData.ContainsMainPlayer())
             {
+                // moving the exfil here now makes it show correctly in Dynamic Maps
+                // unfortunately, if the safehouse radio is moved, the map won't update until the next raid
+                HCSession.Instance.CustomSafehouseExfil.transform.position = transform.position;
                 SetSafehouseEnabled(true);
             }
         }
@@ -83,7 +86,7 @@ namespace HomeComforts.Items.Safehouse
             }
             else
             {
-                HomeComforts.Components.HCSession.Instance.CustomSafehouseExfil.SetCustomExfilEnabled(false);
+                HCSession.Instance.CustomSafehouseExfil.SetCustomExfilEnabled(false);
                 AddonData.RemoveProfileId();
             }
 
