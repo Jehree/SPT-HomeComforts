@@ -7,19 +7,13 @@ namespace HomeComforts.Helpers
 {
     public class Settings
     {
-        public const float DefaultHydrationRate = -1.976f;
-        public const float DefaultEnergyRate = -2.432f;
-
-        public static ConfigEntry<float> HydrationFullBuff;
-        public static ConfigEntry<float> EnergyFullBuff;
-
         public static ConfigEntry<float> ExfilSizeMultiplier;
 
         public static ConfigEntry<bool> AlwaysInfilAtSafehouse;
 
-        public static ConfigEntry<float> HydrationDrainReduction;
-        public static ConfigEntry<float> EnergyDrainReduction;
         public static ConfigEntry<float> SpaceHeaterAOESizeMultiplier;
+        public static ConfigEntry<float> SpaceHeaterHydrationBuff;
+        public static ConfigEntry<float> SpaceHeaterEnergyBuff;
 
         public static ConfigEntry<int> CustomsSafehouseLimit;
         public static ConfigEntry<int> FactorySafehouseLimit;
@@ -50,18 +44,6 @@ namespace HomeComforts.Helpers
                 8f,
                 new ConfigDescription("Size of exfil trigger.", null, new ConfigurationManagerAttributes { IsAdvanced = true })
             );
-            HydrationFullBuff = config.Bind(
-                "0: Advanced",
-                "Hydration Full Buff",
-                1.976f,
-                new ConfigDescription("Default will bring hydration to a drain of 0 when set to 100%.", null, new ConfigurationManagerAttributes { IsAdvanced = true })
-            );
-            EnergyFullBuff = config.Bind(
-                "0: Advanced",
-                "Energy Full Buff",
-                2.432f,
-                new ConfigDescription("Default will bring energy to a drain of 0 when set to 100%.", null, new ConfigurationManagerAttributes { IsAdvanced = true })
-            );
 
             AlwaysInfilAtSafehouse = config.Bind(
                 "1: Safehouse",
@@ -70,23 +52,23 @@ namespace HomeComforts.Helpers
                 "true = always infil at the last enabled safehouse you exfil'd at. false = only infil at a safehouse if you exfil'd at it in the last raid you played on that map."
             );
 
-            HydrationDrainReduction = config.Bind(
-                "2: Space Heater",
-                "Safehouse Hydration Drain Reduction",
-                1f,
-                new ConfigDescription("100% = no hydration draion, 0% = full hydration drain. Requires raid restart to take affect.", new AcceptableValueRange<float>(0, 1))
-            );
-            EnergyDrainReduction = config.Bind(
-                "2: Space Heater",
-                "Safehouse Energy Drain Reduction",
-                1f,
-                new ConfigDescription("100% = no energy draion, 0% = full energy drain. Requires raid restart to take affect.", new AcceptableValueRange<float>(0, 1))
-            );
             SpaceHeaterAOESizeMultiplier = config.Bind(
                 "2: Space Heater",
                 "Space Heater AOE Size Multiplier",
-                12f,
+                14f,
                 "Size multiplier for Space Heater area of affect zone. Requires raid restart to fully take affect."
+            );
+            SpaceHeaterHydrationBuff = config.Bind(
+                "2: Space Heater",
+                "Hydration Buff",
+                3.5f,
+                "Hydration buff (per minute) while near a space heater."
+            );
+            SpaceHeaterEnergyBuff = config.Bind(
+                "2: Space Heater",
+                "Energy Buff",
+                3.5f,
+                "Energy buff (per minute) while near a space heater."
             );
 
             CustomsSafehouseLimit = config.Bind(

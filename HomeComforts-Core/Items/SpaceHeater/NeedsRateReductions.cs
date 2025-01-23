@@ -15,8 +15,8 @@ namespace HomeComforts.Items.SpaceHeater
         private WaitForSeconds _waitFor60Seconds = new(60);
         private float _espilon = 0.000001f;
 
-        private float _hydrationBuff = Settings.HydrationFullBuff.Value * Settings.HydrationDrainReduction.Value;
-        private float _energyBuff = Settings.EnergyFullBuff.Value * Settings.EnergyDrainReduction.Value;
+        private float _hydrationBuff = Settings.SpaceHeaterHydrationBuff.Value;
+        private float _energyBuff = Settings.SpaceHeaterEnergyBuff.Value;
 
         public void SetEnabled(bool enabled)
         {
