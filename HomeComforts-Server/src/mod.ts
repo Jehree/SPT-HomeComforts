@@ -43,12 +43,7 @@ class Mod implements IPreSptLoadMod, IPostDBLoadMod {
     }
 
     static onConfigToClient(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {
-        const data = JSON.parse(JSON.stringify(info)) as ServerConfig;
-
-        data.SafehouseItemIds.push(...Config.SafehouseItemIds);
-        data.SpaceHeaterItemIds.push(...Config.SpaceHeaterItemIds);
-
-        return JSON.stringify(data);
+        return JSON.stringify(Config);
     }
 
     static getAllEntryPointsString(url: string, info: any, sessionId: string, output: string, helper: ModHelper): string {

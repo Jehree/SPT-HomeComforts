@@ -15,14 +15,7 @@ export type SimpleItem = {
     bundlePath: string;
 };
 
-export type GameobjectLayerSetter = {
-    TemplateId: string;
-    GameobjectNames: string[];
-    LayerName: string;
-};
-
 export type ServerConfig = {
     SafehouseItemIds: string[];
     SpaceHeaterItemIds: string[];
-    LayerSetterInfoList: GameobjectLayerSetter[];
 };
