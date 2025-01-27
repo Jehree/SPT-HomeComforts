@@ -126,7 +126,7 @@ internal class SafehouseSession
 
         if (safehouse != null && safehouse.SafehouseEnabled) 
         {
-            HCSession.Instance.Player.Teleport(profileData.InfilPosition);
+            HCSession.Instance.Player.Teleport(profileData.InfilPosition); 
         }
         else
         {

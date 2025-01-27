@@ -32,7 +32,7 @@ namespace HomeComforts.Items.SpaceHeater
         {
             if (!Plugin.ServerConfig.SpaceHeaterItemIds.Contains(fakeItem.LootItem.Item.TemplateId)) return;
 
-            var heater = AddSpaceHeaterBehavior(fakeItem);
+            SpaceHeater heater = AddSpaceHeaterBehavior(fakeItem);
             HCSession.Instance.SpaceHeaterSession.SpaceHeaters.Add(heater);
             fakeItem.OnPlacedStateChanged += heater.OnItemPlacedStateChanged;
 
@@ -83,7 +83,7 @@ namespace HomeComforts.Items.SpaceHeater
         public static SpaceHeater AddSpaceHeaterBehavior(FakeItem fakeItem)
         {
             GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            obj.name = fakeItem.name + "_spaceheater";
+            obj.name = fakeItem.name + "_spaceheater_LITKeepLayer";
             obj.layer = LayerMask.NameToLayer("Triggers");
             obj.transform.localScale = Vector3.one * Settings.SpaceHeaterAOESizeMultiplier.Value;
             obj.GetComponent<Renderer>().enabled = false;
@@ -91,7 +91,7 @@ namespace HomeComforts.Items.SpaceHeater
             SphereCollider collider = obj.GetComponent<SphereCollider>();
             collider.isTrigger = true;
 
-            var heater = obj.AddComponent<SpaceHeater>();
+            SpaceHeater heater = obj.AddComponent<SpaceHeater>();
             heater.Init(fakeItem, collider);
             return heater;
         }
