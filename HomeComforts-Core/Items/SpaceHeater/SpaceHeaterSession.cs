@@ -38,7 +38,7 @@ internal class SpaceHeaterSession
 
     public bool SpaceHeaterIsEnabled(string itemId)
     {
-        var heater = GetSpaceHeaterOrNull(itemId);
+        SpaceHeater heater = GetSpaceHeaterOrNull(itemId);
         if (heater == null) return false;
         return heater.AOEEnabled;
     }

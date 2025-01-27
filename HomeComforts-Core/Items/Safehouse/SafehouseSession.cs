@@ -35,7 +35,7 @@ internal class SafehouseSession
             // in that case, we add an empty one
             if (_addonData == null)
             {
-                var newAddonData = new SafehouseGlobalAddonData();
+                SafehouseGlobalAddonData newAddonData = new SafehouseGlobalAddonData();
                 LITSession.Instance.PutGlobalAddonData(Plugin.AddonDataKey, newAddonData);
                 _addonData = newAddonData;
             }
@@ -49,7 +49,7 @@ internal class SafehouseSession
         get
         {
             int enabledSafehouseCount = 0;
-            foreach (var safehouse in EnabledSafehouses)
+            foreach (Safehouse safehouse in EnabledSafehouses)
             {
                 if (safehouse.SafehouseEnabled) enabledSafehouseCount++;
             }
@@ -92,7 +92,7 @@ internal class SafehouseSession
             {
                 _session.AddonData.AddProfile();
             }
-            
+
             if (profileCleanupNeeded)
             {
                 _session.AddonData.RemoveProfile();
@@ -106,7 +106,7 @@ internal class SafehouseSession
 
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
     {
-        var customExfil = SafehouseExfil.Create("homecomforts_safehouse");
+        SafehouseExfil customExfil = SafehouseExfil.Create("homecomforts_safehouse");
         customExfil.InitCustomExfil();
 
         HCSession.Instance.CustomSafehouseExfil = customExfil;
@@ -120,13 +120,13 @@ internal class SafehouseSession
 
         if (!_session.AddonData.ContainsProfile()) return;
 
-        var profileData = _session.AddonData.GetProfile();
+        SafehouseGlobalAddonData.ProfileData profileData = _session.AddonData.GetProfile();
 
         Safehouse safehouse = _session.GetSafehouseOrNull(profileData.SafehouseId);
 
-        if (safehouse != null && safehouse.SafehouseEnabled) 
+        if (safehouse != null && safehouse.SafehouseEnabled)
         {
-            HCSession.Instance.Player.Teleport(profileData.InfilPosition); 
+            HCSession.Instance.Player.Teleport(profileData.InfilPosition);
         }
         else
         {

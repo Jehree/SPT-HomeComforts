@@ -1,7 +1,5 @@
-﻿using Comfort.Common;
-using EFT;
+﻿using EFT;
 using SPT.Reflection.Patching;
-using System.Linq;
 using System.Reflection;
 
 namespace HomeComforts.Patches
@@ -16,7 +14,7 @@ namespace HomeComforts.Patches
         [PatchPrefix]
         static void PatchPrefix()
         {
-            
+
         }
     }
 }

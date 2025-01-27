@@ -27,7 +27,7 @@ namespace HomeComforts.Items.Safehouse
                 // in that case, we add an empty one
                 if (_addonData == null)
                 {
-                    var newAddonData = new SafehouseAddonData();
+                    SafehouseAddonData newAddonData = new SafehouseAddonData();
                     FakeItem.PutAddonData(Plugin.AddonDataKey, newAddonData);
                     _addonData = newAddonData;
                 }
@@ -59,7 +59,7 @@ namespace HomeComforts.Items.Safehouse
         public static void OnFakeItemInitialized(FakeItem fakeItem)
         {
             if (!Plugin.ServerConfig.SafehouseItemIds.Contains(fakeItem.LootItem.Item.TemplateId)) return;
-            var safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
+            Safehouse safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
             safehouse.Init(fakeItem);
             fakeItem.Actions.Add(GetToggleSafehouseEnabledAction(fakeItem.ItemId));
             fakeItem.Actions.Add(GetEnableExfilInteractionAction(fakeItem.ItemId));
@@ -101,7 +101,7 @@ namespace HomeComforts.Items.Safehouse
             return new CustomInteraction(
                 () =>
                 {
-                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
 
                     if (safehouse.SafehouseEnabled)
                     {
@@ -114,13 +114,13 @@ namespace HomeComforts.Items.Safehouse
                 },
                 () =>
                 {
-                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
                     if (safehouse.SafehouseEnabled) return false; //always enable interaction when safehouse is enabled so that it can be disabled
                     return !HCSession.Instance.SafehouseSession.SafehouseEnableAllowed;
                 },
                 () =>
                 {
-                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
                     safehouse.SetSafehouseEnabled(!safehouse.SafehouseEnabled);
                 }
             );
@@ -145,12 +145,12 @@ namespace HomeComforts.Items.Safehouse
                 },
                 () =>
                 {
-                    var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
                     return !safehouse.SafehouseEnabled;
                 },
                 () =>
                 {
-                    var exfil = HCSession.Instance.CustomSafehouseExfil;
+                    SafehouseExfil exfil = HCSession.Instance.CustomSafehouseExfil;
 
                     exfil.SetCustomExfilEnabled(!exfil.ExfilIsEnabled);
 

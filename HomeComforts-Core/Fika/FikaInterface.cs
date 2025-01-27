@@ -1,6 +1,5 @@
 ﻿using Comfort.Common;
 using EFT;
-using EFT.Interactive;
 using HomeComforts.Items.Safehouse;
 using HomeComforts.Items.SpaceHeater;
 

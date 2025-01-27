@@ -1,5 +1,6 @@
 ﻿using Comfort.Common;
 using EFT;
+using EFT.HealthSystem;
 using HomeComforts.Components;
 using HomeComforts.Helpers;
 using System;
@@ -12,17 +13,19 @@ namespace HomeComforts.Items.SpaceHeater
     {
         public bool Enabled { get; private set; } = false;
         private Coroutine _routine = null;
-        private WaitForSeconds _waitFor60Seconds = new(60);
-        private float _espilon = 0.000001f;
 
-        private float _hydrationBuff = Settings.SpaceHeaterHydrationBuff.Value;
-        private float _energyBuff = Settings.SpaceHeaterEnergyBuff.Value;
+        // the reason we divide these by four is to soften the case where the player is in and out of the safe zone somewhat frequently, causing them to never get a tick of the buff
+        // this happens because, previously, the tick only occured if the player was inside the zone for an entire 60 seconds. If the player exited at 55 seconds and re-entered, they wouldn't experience a tick
+        // I think this behavior is fine and keeps the heater balanced.. but I think needing to be inside the zone for 60 seconds is a bit harsh. 15 is more fair.
+        private float _hydrationBuff = Settings.SpaceHeaterHydrationBuff.Value / 4;
+        private float _energyBuff = Settings.SpaceHeaterEnergyBuff.Value / 4;
+        private WaitForSeconds _waitFor60Seconds = new(15);
 
         public void SetEnabled(bool enabled)
         {
             if (Enabled == enabled) return;
             Enabled = enabled;
-            var controller = HCSession.Instance.Player.ActiveHealthController;
+            ActiveHealthController controller = HCSession.Instance.Player.ActiveHealthController;
 
             if (Enabled)
             {
@@ -41,16 +44,6 @@ namespace HomeComforts.Items.SpaceHeater
                     StaticManager.KillCoroutine(_routine);
                     _routine = null;
                 }
-            }
-
-            if (Math.Abs(controller.HydrationRate) < _espilon)
-            {
-                controller.HydrationRate = 0;
-            }
-
-            if (Math.Abs(controller.EnergyRate) < _espilon)
-            {
-                controller.EnergyRate = 0;
             }
         }
 

@@ -1,7 +1,4 @@
 ﻿using Comfort.Common;
-using EFT.Interactive;
-using Fika.Core.Coop.GameMode;
-using Fika.Core.Coop.Players;
 using Fika.Core.Networking;
 using HomeComforts.Components;
 using HomeComforts.Fika;
@@ -66,7 +63,7 @@ namespace HomeComforts.Items.Safehouse
         {
             if (FikaWrapper.IAmHost()) return;
 
-            var packet = new SafehouseEnabledStatePacket
+            SafehouseEnabledStatePacket packet = new SafehouseEnabledStatePacket
             {
                 Enabled = enabled,
                 SafehouseId = safehouseId,
@@ -82,7 +79,7 @@ namespace HomeComforts.Items.Safehouse
             Plugin.LogSource.LogError("OnSafehouseEnabledStatePacketReceived");
 #endif
 
-            var safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(packet.SafehouseId);
+            Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(packet.SafehouseId);
             if (safehouse == null) return;
 
             if (packet.Enabled)

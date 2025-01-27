@@ -122,7 +122,7 @@ namespace HomeComforts.Items.SpaceHeater
                 false,
                 () =>
                 {
-                    var heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(itemId);
+                    SpaceHeater heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(itemId);
                     heater.AOEEnabled = !heater.AOEEnabled;
 
                     if (heater.AOEEnabled)

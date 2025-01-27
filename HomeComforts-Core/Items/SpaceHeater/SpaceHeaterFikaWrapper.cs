@@ -11,7 +11,7 @@ namespace HomeComforts.Items.SpaceHeater
     {
         public static void SendSpaceHeaterStatePacket(bool enabled, string spaceHeaterId)
         {
-            var packet = new SpaceHeaterStatePacket
+            SpaceHeaterStatePacket packet = new SpaceHeaterStatePacket
             {
                 Enabled = enabled,
                 SpaceHeaterId = spaceHeaterId
@@ -38,7 +38,7 @@ namespace HomeComforts.Items.SpaceHeater
                 Singleton<FikaServer>.Instance.SendDataToAll(ref packet, LiteNetLib.DeliveryMethod.ReliableOrdered);
             }
 
-            var heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(packet.SpaceHeaterId);
+            SpaceHeater heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(packet.SpaceHeaterId);
             if (heater == null) return;
 
             heater.AOEEnabled = packet.Enabled;

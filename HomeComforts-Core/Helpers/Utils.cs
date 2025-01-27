@@ -70,7 +70,7 @@ namespace HomeComforts.Helpers
         public static T ServerRoute<T>(string url, object data = default(object))
         {
             string json = JsonConvert.SerializeObject(data);
-            var req = RequestHandler.PostJson(url, json);
+            string req = RequestHandler.PostJson(url, json);
             return JsonConvert.DeserializeObject<T>(req);
         }
         public static string ServerRoute(string url, object data = default(object))

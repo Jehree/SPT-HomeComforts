@@ -22,7 +22,7 @@ namespace HomeComforts.Patches
                 targetClass.GetMethods().Any(method => method.Name == "ReceiveInsurancePrices")
             );
 
-            var targetMethod = AccessTools.Method(_targetClassType.GetTypeInfo(), "LocalRaidEnded");
+            MethodInfo targetMethod = AccessTools.Method(_targetClassType.GetTypeInfo(), "LocalRaidEnded");
 
             _exitNameInfo = targetMethod.GetParameters()[1].ParameterType.GetProperty("exitName");
 
