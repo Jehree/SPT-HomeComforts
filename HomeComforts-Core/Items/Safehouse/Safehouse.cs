@@ -1,5 +1,6 @@
 ﻿using HomeComforts.Components;
 using HomeComforts.Fika;
+using HomeComforts.Helpers;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
 using LeaveItThere.Helpers;
@@ -59,12 +60,16 @@ namespace HomeComforts.Items.Safehouse
         public static void OnFakeItemInitialized(FakeItem fakeItem)
         {
             if (!Plugin.ServerConfig.SafehouseItemIds.Contains(fakeItem.LootItem.Item.TemplateId)) return;
+
+            fakeItem.gameObject.transform.localScale *= 2;
+            if (!Settings.ScavsCanUseSafehouse.Value && HCSession.Instance.Player.Side == EFT.EPlayerSide.Savage) return;
+
             Safehouse safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
             safehouse.Init(fakeItem);
             fakeItem.Actions.Add(GetToggleSafehouseEnabledAction(fakeItem.ItemId));
             fakeItem.Actions.Add(GetEnableExfilInteractionAction(fakeItem.ItemId));
-            fakeItem.gameObject.transform.localScale *= 2;
         }
+
         private void Init(FakeItem fakeItem)
         {
             FakeItem = fakeItem;
@@ -127,7 +132,6 @@ namespace HomeComforts.Items.Safehouse
         }
 
         //TODO: add 'Enable as Guest' option when safehouse limit is reached
-
         private static CustomInteraction GetEnableExfilInteractionAction(string itemId)
         {
             return new CustomInteraction
@@ -159,9 +163,6 @@ namespace HomeComforts.Items.Safehouse
                         exfil.gameObject.transform.position = HCSession.Instance.Player.gameObject.transform.position;
                         exfil.LastSafehouseThatUsedMe = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
                     }
-
-                    // extraction is instant with Fika
-                    //FikaInterface.Extract(exfil);
                 }
             );
         }

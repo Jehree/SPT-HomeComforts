@@ -13,12 +13,14 @@ using System.Collections.Generic;
 namespace HomeComforts
 {
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Jehree.InteractableExfilsAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static bool FikaInstalled { get; private set; }
         public static bool IAmDedicatedClient { get; private set; }
+        public static bool IEAPIInstalled { get; private set; }
         public static ManualLogSource LogSource;
         public static ServerConfig ServerConfig = new();
         public static List<string> AllEntryPoints;
@@ -31,6 +33,7 @@ namespace HomeComforts
         {
             FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
             IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
+            IEAPIInstalled = Chainloader.PluginInfos.ContainsKey("Jehree.InteractableExfilsAPI");
             ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient);
             AllEntryPoints = Utils.ServerRoute<List<string>>(GetAllEntryPoints);
 

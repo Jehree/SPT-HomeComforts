@@ -19,7 +19,7 @@ namespace HomeComforts.Items.SpaceHeater
         // I think this behavior is fine and keeps the heater balanced.. but I think needing to be inside the zone for 60 seconds is a bit harsh. 15 is more fair.
         private float _hydrationBuff = Settings.SpaceHeaterHydrationBuff.Value / 4;
         private float _energyBuff = Settings.SpaceHeaterEnergyBuff.Value / 4;
-        private WaitForSeconds _waitFor60Seconds = new(15);
+        private WaitForSeconds _waitFor15Seconds = new(15);
 
         public void SetEnabled(bool enabled)
         {
@@ -51,7 +51,7 @@ namespace HomeComforts.Items.SpaceHeater
         {
             while (true)
             {
-                yield return _waitFor60Seconds;
+                yield return _waitFor15Seconds;
 
                 if (!Singleton<GameWorld>.Instantiated)
                 {

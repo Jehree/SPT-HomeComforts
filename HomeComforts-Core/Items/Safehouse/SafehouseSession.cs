@@ -1,4 +1,5 @@
-﻿using EFT;
+﻿using Comfort.Common;
+using EFT;
 using HomeComforts;
 using HomeComforts.Components;
 using HomeComforts.Fika;
@@ -8,6 +9,7 @@ using LeaveItThere.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 internal class SafehouseSession
 {
@@ -106,12 +108,10 @@ internal class SafehouseSession
 
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
     {
-        SafehouseExfil customExfil = SafehouseExfil.Create("homecomforts_safehouse");
-        customExfil.InitCustomExfil();
+        HCSession.Instance.CustomSafehouseExfil = SafehouseExfil.Create("homecomforts_safehouse");
+        HCSession.Instance.CustomSafehouseExfil.InitCustomExfil();
 
-        HCSession.Instance.CustomSafehouseExfil = customExfil;
-
-        exfilController.ExfiltrationPoints = [.. exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
+        exfilController.ExfiltrationPoints = [..exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
     }
 
     public static void OnLastPlacedItemSpawned(FakeItem fakeItem)

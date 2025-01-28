@@ -7,6 +7,9 @@ namespace HomeComforts.Components
 {
     internal class SafehouseExfil : ExfiltrationPoint
     {
+        // need this here to avoid an error during an SPT patch that sets it via reflection
+        private bool _authorityToChangeStatusExternally = false;
+
         public Safehouse LastSafehouseThatUsedMe = null;
         public BoxCollider Collider { get; private set; }
         public bool ExfilIsEnabled
@@ -57,7 +60,7 @@ namespace HomeComforts.Components
                 Chance = 100,
                 MinTime = 0f,
                 MaxTime = 0f,
-                RequirementTip = ""
+                RequirementTip = "",
             };
         }
 

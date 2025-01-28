@@ -10,6 +10,7 @@ namespace HomeComforts.Helpers
         public static ConfigEntry<float> ExfilSizeMultiplier;
 
         public static ConfigEntry<bool> AlwaysInfilAtSafehouse;
+        public static ConfigEntry<bool> ScavsCanUseSafehouse;
 
         public static ConfigEntry<float> SpaceHeaterAOESizeMultiplier;
         public static ConfigEntry<float> SpaceHeaterHydrationBuff;
@@ -50,6 +51,12 @@ namespace HomeComforts.Helpers
                 "Always Infil at Safehouse",
                 false,
                 "true = always infil at the last enabled safehouse you exfil'd at. false = only infil at a safehouse if you exfil'd at it in the last raid you played on that map."
+            );
+            ScavsCanUseSafehouse = config.Bind(
+                "1: Safehouse",
+                "Player Scavs can use Safehouse Marker Radio",
+                false,
+                "If safehouses can be used while on a scav raid."
             );
 
             SpaceHeaterAOESizeMultiplier = config.Bind(
