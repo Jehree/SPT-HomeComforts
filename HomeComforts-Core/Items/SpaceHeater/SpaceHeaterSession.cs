@@ -35,11 +35,4 @@ internal class SpaceHeaterSession
     {
         return SpaceHeaters.FirstOrDefault(heater => heater.FakeItem.ItemId == itemId);
     }
-
-    public bool SpaceHeaterIsEnabled(string itemId)
-    {
-        SpaceHeater heater = GetSpaceHeaterOrNull(itemId);
-        if (heater == null) return false;
-        return heater.AOEEnabled;
-    }
 }

@@ -15,7 +15,7 @@ namespace HomeComforts
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.InteractableExfilsAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.0")]
+    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.0.8")]
     public class Plugin : BaseUnityPlugin
     {
         public static bool FikaInstalled { get; private set; }
@@ -34,8 +34,8 @@ namespace HomeComforts
             FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
             IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
             IEAPIInstalled = Chainloader.PluginInfos.ContainsKey("Jehree.InteractableExfilsAPI");
-            ServerConfig = Utils.ServerRoute<ServerConfig>(ConfigToClient);
-            AllEntryPoints = Utils.ServerRoute<List<string>>(GetAllEntryPoints);
+            ServerConfig = LITUtils.ServerRoute<ServerConfig>(ConfigToClient);
+            AllEntryPoints = LITUtils.ServerRoute<List<string>>(GetAllEntryPoints);
 
             LogSource = Logger;
             Settings.Init(Config);
@@ -53,6 +53,13 @@ namespace HomeComforts
         private void OnEnable()
         {
             FikaInterface.InitOnPluginEnabled();
+        }
+
+        public static void DebugLog(string message)
+        {
+#if DEBUG
+            LogSource.LogError($"[Debug Log]: {message}");
+#endif
         }
     }
 

@@ -24,7 +24,7 @@ namespace HomeComforts.Components
         {
             GameObject obj = new()
             {
-                name = name,
+                name = name + "_IEAPIIgnore",
                 layer = LayerMask.NameToLayer("Triggers")
             };
 

@@ -1,4 +1,5 @@
 ﻿using Comfort.Common;
+using EFT.InventoryLogic;
 using EFT.UI;
 using HomeComforts.Components;
 using HomeComforts.Fika;
@@ -36,7 +37,7 @@ namespace HomeComforts.Items.SpaceHeater
             HCSession.Instance.SpaceHeaterSession.SpaceHeaters.Add(heater);
             fakeItem.OnPlacedStateChanged += heater.OnItemPlacedStateChanged;
 
-            fakeItem.Actions.Add(GetToggleSpaceHeaterAction(fakeItem.ItemId));
+            fakeItem.Actions.Add(new ToggleSpaceHeaterInteraction(fakeItem, heater));
 
             SpaceHeaterAddonData addonData = fakeItem.GetAddonDataOrNull<SpaceHeaterAddonData>(Plugin.AddonDataKey);
             if (addonData != null && addonData.HeaterEnabled)
@@ -105,40 +106,29 @@ namespace HomeComforts.Items.SpaceHeater
             AOEEnabled = false;
         }
 
-        private static CustomInteraction GetToggleSpaceHeaterAction(string itemId)
+        public class ToggleSpaceHeaterInteraction(FakeItem fakeItem, SpaceHeater heater) : CustomInteraction(fakeItem)
         {
-            return new CustomInteraction(
-                () =>
-                {
-                    if (HCSession.Instance.SpaceHeaterSession.SpaceHeaterIsEnabled(itemId))
-                    {
-                        return "Turn Off";
-                    }
-                    else
-                    {
-                        return "Turn On";
-                    }
-                },
-                false,
-                () =>
-                {
-                    SpaceHeater heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(itemId);
-                    heater.AOEEnabled = !heater.AOEEnabled;
+            public SpaceHeater Heater { get; private set; } = heater;
+            public override string Name => Heater.AOEEnabled
+                                                    ? "Turn Off"
+                                                    : "Turn On";
+            public override bool AutoPromptRefresh => true;
+            public override void OnInteract()
+            {
+                Heater.AOEEnabled = !Heater.AOEEnabled;
 
-                    if (heater.AOEEnabled)
-                    {
-                        Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOn);
-                    }
-                    else
-                    {
-                        Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOff);
-                    }
-
-                    InteractionHelper.RefreshPrompt();
-                    FikaInterface.SendSpaceHeaterStatePacket(heater.AOEEnabled, itemId);
-                    heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(heater.AOEEnabled));
+                if (Heater.AOEEnabled)
+                {
+                    Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOn);
                 }
-            );
+                else
+                {
+                    Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOff);
+                }
+
+                FikaInterface.SendSpaceHeaterStatePacket(Heater.AOEEnabled, FakeItem.ItemId);
+                Heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(Heater.AOEEnabled));
+            }
         }
     }
 }

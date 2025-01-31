@@ -30,7 +30,7 @@ namespace HomeComforts.Items.SpaceHeater
         public static void OnSpaceHeaterStatePacketReceived(SpaceHeaterStatePacket packet, NetPeer peer)
         {
 #if DEBUG
-            Plugin.LogSource.LogError("OnSpaceHeaterStatePacketReceived");
+            Plugin.DebugLog("OnSpaceHeaterStatePacketReceived");
 #endif
 
             if (FikaWrapper.IAmHost())

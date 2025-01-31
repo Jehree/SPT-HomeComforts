@@ -1,4 +1,5 @@
-﻿using HomeComforts.Components;
+﻿using EFT.InventoryLogic;
+using HomeComforts.Components;
 using HomeComforts.Fika;
 using HomeComforts.Helpers;
 using LeaveItThere.Common;
@@ -66,8 +67,8 @@ namespace HomeComforts.Items.Safehouse
 
             Safehouse safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
             safehouse.Init(fakeItem);
-            fakeItem.Actions.Add(GetToggleSafehouseEnabledAction(fakeItem.ItemId));
-            fakeItem.Actions.Add(GetEnableExfilInteractionAction(fakeItem.ItemId));
+            fakeItem.Actions.Add(new ToggleSafehouseEnabledInteraction(fakeItem, safehouse));
+            fakeItem.Actions.Add(new ToggleExfilEnabledInteraction(fakeItem, safehouse));
         }
 
         private void Init(FakeItem fakeItem)
@@ -83,8 +84,8 @@ namespace HomeComforts.Items.Safehouse
         {
             if (enabled == SafehouseEnabled) return;
             SafehouseEnabled = enabled;
-            FakeItem.AddonFlags.MoveModeDisabled = enabled;
-            FakeItem.AddonFlags.ReclaimInteractionDisabled = enabled;
+            FakeItem.Flags.MoveModeDisabled = enabled;
+            FakeItem.Flags.ReclaimInteractionDisabled = enabled;
 
             if (enabled)
             {
@@ -98,73 +99,41 @@ namespace HomeComforts.Items.Safehouse
 
             FikaInterface.SendSafehouseEnabledStatePacket(enabled, FakeItem.LootItem.ItemId);
             NotificationManagerClass.DisplayMessageNotification($"Safehouse Enabled: {SafehouseEnabled}");
-            InteractionHelper.RefreshPrompt();
         }
 
-        private static CustomInteraction GetToggleSafehouseEnabledAction(string itemId)
+        public class ToggleSafehouseEnabledInteraction(FakeItem fakeItem, Safehouse safehouse) : CustomInteraction(fakeItem)
         {
-            return new CustomInteraction(
-                () =>
-                {
-                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
+            public Safehouse Safehouse { get; private set; } = safehouse;
 
-                    if (safehouse.SafehouseEnabled)
-                    {
-                        return "Disable Safehouse";
-                    }
-                    else
-                    {
-                        return "Enable Safehouse";
-                    }
-                },
-                () =>
-                {
-                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
-                    if (safehouse.SafehouseEnabled) return false; //always enable interaction when safehouse is enabled so that it can be disabled
-                    return !HCSession.Instance.SafehouseSession.SafehouseEnableAllowed;
-                },
-                () =>
-                {
-                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
-                    safehouse.SetSafehouseEnabled(!safehouse.SafehouseEnabled);
-                }
-            );
+            public override string Name => Safehouse.SafehouseEnabled 
+                                                ? "Disable Safehouse"
+                                                : "Enabled Safehouse";
+            public override bool Enabled => Safehouse.SafehouseEnabled
+                                                ? true //always enable interaction when safehouse is enabled so that it can be disabled
+                                                : HCSession.Instance.SafehouseSession.SafehouseEnableAllowed;
+            public override bool AutoPromptRefresh => true;
+            public override void OnInteract() => Safehouse.SetSafehouseEnabled(!Safehouse.SafehouseEnabled);
         }
 
-        //TODO: add 'Enable as Guest' option when safehouse limit is reached
-        private static CustomInteraction GetEnableExfilInteractionAction(string itemId)
+        public class ToggleExfilEnabledInteraction(FakeItem fakeItem, Safehouse safehouse) : CustomInteraction(fakeItem)
         {
-            return new CustomInteraction
-            (
-                () =>
-                {
-                    if (HCSession.Instance.CustomSafehouseExfil.ExfilIsEnabled)
-                    {
-                        return "Stop Extracting";
-                    }
-                    else
-                    {
-                        return "Extract";
-                    }
-                },
-                () =>
-                {
-                    Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
-                    return !safehouse.SafehouseEnabled;
-                },
-                () =>
-                {
-                    SafehouseExfil exfil = HCSession.Instance.CustomSafehouseExfil;
+            public Safehouse Safehouse { get; private set; } = safehouse;
+            public SafehouseExfil Exfil { get; private set; } = HCSession.Instance.CustomSafehouseExfil;
+            public override string Name => Exfil.ExfilIsEnabled
+                                                    ? "Stop Extracting"
+                                                    : "Extract";
+            public override bool Enabled => Safehouse.SafehouseEnabled;
+            public override bool AutoPromptRefresh => true;
+            public override void OnInteract()
+            {
+                Exfil.SetCustomExfilEnabled(!Exfil.ExfilIsEnabled);
 
-                    exfil.SetCustomExfilEnabled(!exfil.ExfilIsEnabled);
-
-                    if (exfil.ExfilIsEnabled)
-                    {
-                        exfil.gameObject.transform.position = HCSession.Instance.Player.gameObject.transform.position;
-                        exfil.LastSafehouseThatUsedMe = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(itemId);
-                    }
+                if (Exfil.ExfilIsEnabled)
+                {
+                    Exfil.gameObject.transform.position = HCSession.Instance.Player.Transform.position;
+                    Exfil.LastSafehouseThatUsedMe = Safehouse;
                 }
-            );
+            }
         }
     }
 }

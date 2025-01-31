@@ -139,7 +139,6 @@
     <Compile Include="Items\SpaceHeater\SpaceHeaterFikaWrapper.cs" />
     <Compile Include="Helpers\ConfigurationManagerAttributes.cs" />
     <Compile Include="Helpers\Settings.cs" />
-    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeaterSession.cs" />
     <Compile Include="Patches\GameEndedPatch.cs" />
     <Compile Include="Patches\GameStartedPatch.cs" />

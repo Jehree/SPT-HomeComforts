@@ -44,7 +44,7 @@ namespace HomeComforts.Items.Safehouse
         public static void OnSafehouseProfileDataPacketReceived(SafehouseProfileDataPacket packet, NetPeer peer)
         {
 #if DEBUG
-            Plugin.LogSource.LogError("OnSafehouseProfileDataPacketReceived");
+            Plugin.DebugLog("OnSafehouseProfileDataPacketReceived");
 #endif
 
             if (!FikaWrapper.IAmHost()) return;
@@ -76,7 +76,7 @@ namespace HomeComforts.Items.Safehouse
         public static void OnSafehouseEnabledStatePacketReceived(SafehouseEnabledStatePacket packet, NetPeer peer)
         {
 #if DEBUG
-            Plugin.LogSource.LogError("OnSafehouseEnabledStatePacketReceived");
+            Plugin.DebugLog("OnSafehouseEnabledStatePacketReceived");
 #endif
 
             Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(packet.SafehouseId);
