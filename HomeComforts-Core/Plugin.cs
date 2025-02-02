@@ -44,10 +44,10 @@ namespace HomeComforts
             new GameEndedPatch().Enable();
             new InitAllExfiltrationPointsPatch().Enable();
 
-            LeaveItThereStaticEvents.OnFakeItemInitialized += Safehouse.OnFakeItemInitialized;
-            LeaveItThereStaticEvents.OnFakeItemInitialized += SpaceHeater.OnFakeItemInitialized;
-            LeaveItThereStaticEvents.OnLastPlacedItemSpawned += HCSession.OnLastPlacedItemSpawned;
-            LeaveItThereStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
+            LITStaticEvents.OnFakeItemInitialized += Safehouse.OnFakeItemInitialized;
+            LITStaticEvents.OnFakeItemInitialized += SpaceHeater.OnFakeItemInitialized;
+            LITStaticEvents.OnLastPlacedItemSpawned += HCSession.OnLastPlacedItemSpawned;
+            LITStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
         }
 
         private void OnEnable()

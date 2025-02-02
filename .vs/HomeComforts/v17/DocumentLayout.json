@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\items\\safehouse\\safehousefikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\safehouse\\safehouseexfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\safehouse\\safehouseexfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\safehouse\\safehousefikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\safehouse\\safehousefikawrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\patches\\gamestartedpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\patches\\gamestartedpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\safehouse\\safehouseexfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\safehouse\\safehouseexfil.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\spaceheater\\spaceheater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,7 +46,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SafehouseFikaWrapper.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\Safehouse\\SafehouseFikaWrapper.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\Safehouse\\SafehouseFikaWrapper.cs",
@@ -54,24 +54,24 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\Safehouse\\SafehouseFikaWrapper.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAswC8AAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-30T17:30:52.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-30T17:30:52.719Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "SafehouseExfil.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\Safehouse\\SafehouseExfil.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\Safehouse\\SafehouseExfil.cs",
               "ToolTip": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\Safehouse\\SafehouseExfil.cs",
               "RelativeToolTip": "HomeComforts-Core\\Items\\Safehouse\\SafehouseExfil.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-30T16:22:53.528Z"
+              "WhenOpened": "2025-01-30T16:22:53.528Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "SafehouseSession.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\Safehouse\\SafehouseSession.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\Safehouse\\SafehouseSession.cs",
@@ -83,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GameStartedPatch.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Patches\\GameStartedPatch.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Patches\\GameStartedPatch.cs",
@@ -101,14 +101,14 @@
               "RelativeDocumentMoniker": "HomeComforts-Core\\Plugin.cs",
               "ToolTip": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Plugin.cs",
               "RelativeToolTip": "HomeComforts-Core\\Plugin.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwDUAAAAJAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAIwEUAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-30T15:51:49.314Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "SpaceHeaterSession.cs",
               "DocumentMoniker": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterSession.cs",
               "RelativeDocumentMoniker": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeaterSession.cs",
