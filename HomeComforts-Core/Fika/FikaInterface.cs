@@ -30,17 +30,5 @@ namespace HomeComforts.Fika
             if (!Plugin.FikaInstalled) return;
             SafehouseFikaWrapper.SendHostSafehouseProfileDataPacket(removeProfile);
         }
-
-        public static void SendSpaceHeaterStatePacket(bool enabled, string spaceHeaterId)
-        {
-            if (!Plugin.FikaInstalled) return;
-            SpaceHeaterFikaWrapper.SendSpaceHeaterStatePacket(enabled, spaceHeaterId);
-        }
-
-        public static void SendSafehouseEnabledStatePacket(bool enabled, string safehouseId)
-        {
-            if (!Plugin.FikaInstalled) return;
-            SafehouseFikaWrapper.SendSafehouseEnabledStatePacket(enabled, safehouseId);
-        }
     }
 }

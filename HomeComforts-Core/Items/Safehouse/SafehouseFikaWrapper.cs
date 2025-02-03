@@ -3,7 +3,7 @@ using Fika.Core.Networking;
 using HomeComforts.Components;
 using HomeComforts.Fika;
 using LiteNetLib;
-using LockableDoors.Packets;
+using HomeComforts.Packets;
 
 
 namespace HomeComforts.Items.Safehouse
@@ -57,39 +57,6 @@ namespace HomeComforts.Items.Safehouse
                 HCSession.Instance.SafehouseSession.AddonData.AddProfile(packet.ProfileId, packet.InfilPosition, packet.SafehouseId);
             }
 
-        }
-
-        public static void SendSafehouseEnabledStatePacket(bool enabled, string safehouseId)
-        {
-            if (FikaWrapper.IAmHost()) return;
-
-            SafehouseEnabledStatePacket packet = new SafehouseEnabledStatePacket
-            {
-                Enabled = enabled,
-                SafehouseId = safehouseId,
-                ProfileId = HCSession.Instance.Player.ProfileId,
-            };
-
-            Singleton<FikaClient>.Instance.SendData(ref packet, DeliveryMethod.ReliableOrdered);
-        }
-
-        public static void OnSafehouseEnabledStatePacketReceived(SafehouseEnabledStatePacket packet, NetPeer peer)
-        {
-#if DEBUG
-            Plugin.DebugLog("OnSafehouseEnabledStatePacketReceived");
-#endif
-
-            Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(packet.SafehouseId);
-            if (safehouse == null) return;
-
-            if (packet.Enabled)
-            {
-                safehouse.AddonData.AddProfileId(packet.ProfileId);
-            }
-            else
-            {
-                safehouse.AddonData.RemoveProfileId(packet.ProfileId);
-            }
         }
     }
 }

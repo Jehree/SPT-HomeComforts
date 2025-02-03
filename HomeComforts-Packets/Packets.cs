@@ -2,7 +2,7 @@
 using LiteNetLib.Utils;
 using UnityEngine;
 
-namespace LockableDoors.Packets
+namespace HomeComforts.Packets
 {
     public struct SafehouseProfileDataPacket : INetSerializable
     {
@@ -46,24 +46,6 @@ namespace LockableDoors.Packets
             writer.Put(Enabled);
             writer.Put(SafehouseId);
             writer.Put(ProfileId);
-        }
-    }
-
-    public struct SpaceHeaterStatePacket : INetSerializable
-    {
-        public bool Enabled;
-        public string SpaceHeaterId;
-
-        public void Deserialize(NetDataReader reader)
-        {
-            Enabled = reader.GetBool();
-            SpaceHeaterId = reader.GetString();
-        }
-
-        public void Serialize(NetDataWriter writer)
-        {
-            writer.Put(Enabled);
-            writer.Put(SpaceHeaterId);
         }
     }
 }

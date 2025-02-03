@@ -7,6 +7,7 @@ using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
 using HomeComforts.Items.SpaceHeater;
 using HomeComforts.Patches;
+using LeaveItThere.Addon;
 using LeaveItThere.Helpers;
 using System.Collections.Generic;
 
@@ -48,6 +49,8 @@ namespace HomeComforts
             LITStaticEvents.OnFakeItemInitialized += SpaceHeater.OnFakeItemInitialized;
             LITStaticEvents.OnLastPlacedItemSpawned += HCSession.OnLastPlacedItemSpawned;
             LITStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
+
+            SpaceHeater.SpaceHeaterStatePacket.Instance.Register();
         }
 
         private void OnEnable()

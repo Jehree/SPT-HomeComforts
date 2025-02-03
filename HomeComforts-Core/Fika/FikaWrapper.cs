@@ -6,7 +6,7 @@ using Fika.Core.Networking;
 using HomeComforts.Items.Safehouse;
 using HomeComforts.Items.SpaceHeater;
 using LiteNetLib;
-using LockableDoors.Packets;
+using HomeComforts.Packets;
 
 namespace HomeComforts.Fika
 {
@@ -26,8 +26,6 @@ namespace HomeComforts.Fika
         public static void OnFikaNetManagerCreated(FikaNetworkManagerCreatedEvent managerCreatedEvent)
         {
             managerCreatedEvent.Manager.RegisterPacket<SafehouseProfileDataPacket, NetPeer>(SafehouseFikaWrapper.OnSafehouseProfileDataPacketReceived);
-            managerCreatedEvent.Manager.RegisterPacket<SafehouseEnabledStatePacket, NetPeer>(SafehouseFikaWrapper.OnSafehouseEnabledStatePacketReceived);
-            managerCreatedEvent.Manager.RegisterPacket<SpaceHeaterStatePacket, NetPeer>(SpaceHeaterFikaWrapper.OnSpaceHeaterStatePacketReceived);
         }
 
         public static void InitOnPluginEnabled()

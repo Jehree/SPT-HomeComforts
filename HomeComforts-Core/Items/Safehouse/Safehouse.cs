@@ -2,10 +2,12 @@
 using HomeComforts.Components;
 using HomeComforts.Fika;
 using HomeComforts.Helpers;
+using LeaveItThere.Addon;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
 using LeaveItThere.Helpers;
 using UnityEngine;
+using static HomeComforts.Items.SpaceHeater.SpaceHeater;
 
 namespace HomeComforts.Items.Safehouse
 {
@@ -97,8 +99,42 @@ namespace HomeComforts.Items.Safehouse
                 AddonData.RemoveProfileId();
             }
 
-            FikaInterface.SendSafehouseEnabledStatePacket(enabled, FakeItem.LootItem.ItemId);
+            SafehouseEnabledStatePacket.Instance.SendPacket(enabled, FakeItem.LootItem.ItemId);
             NotificationManagerClass.DisplayMessageNotification($"Safehouse Enabled: {SafehouseEnabled}");
+        }
+
+        public class SafehouseEnabledStatePacket : LITPacketRegistration
+        {
+            public static SafehouseEnabledStatePacket Instance { get => Get<SafehouseEnabledStatePacket>(); }
+            public override EPacketDestination Destination => EPacketDestination.HostOnly;
+            public override void OnPacketReceived(Packet packet)
+            {
+                string safehouseId = packet.StringData;
+                bool enabled = packet.BoolData;
+
+                Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(safehouseId);
+                if (safehouse == null) return;
+
+                if (enabled)
+                {
+                    safehouse.AddonData.AddProfileId(SenderProfileId);
+                }
+                else
+                {
+                    safehouse.AddonData.RemoveProfileId(SenderProfileId);
+                }
+            }
+
+            public void SendPacket(bool enabled, string itemId)
+            {
+                Packet packet = new()
+                {
+                    BoolData = enabled,
+                    StringData = itemId,
+                };
+
+                Send(packet);
+            }
         }
 
         public class ToggleSafehouseEnabledInteraction(FakeItem fakeItem, Safehouse safehouse) : CustomInteraction(fakeItem)

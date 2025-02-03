@@ -1,12 +1,10 @@
 ﻿using Comfort.Common;
-using EFT.InventoryLogic;
 using EFT.UI;
 using HomeComforts.Components;
-using HomeComforts.Fika;
 using HomeComforts.Helpers;
+using LeaveItThere.Addon;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
-using LeaveItThere.Helpers;
 using UnityEngine;
 
 namespace HomeComforts.Items.SpaceHeater
@@ -126,8 +124,38 @@ namespace HomeComforts.Items.SpaceHeater
                     Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOff);
                 }
 
-                FikaInterface.SendSpaceHeaterStatePacket(Heater.AOEEnabled, FakeItem.ItemId);
+                SpaceHeaterStatePacket.Instance.SendPacket(Heater.AOEEnabled, FakeItem.ItemId);
+
                 Heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(Heater.AOEEnabled));
+            }
+        }
+
+
+        public class SpaceHeaterStatePacket : LITPacketRegistration
+        {
+            public static SpaceHeaterStatePacket Instance { get => Get<SpaceHeaterStatePacket>(); }
+
+            public override void OnPacketReceived(Packet packet)
+            {
+                bool enabled = packet.BoolData;
+                string heaterId = packet.StringData;
+
+                SpaceHeater heater = HCSession.Instance.SpaceHeaterSession.GetSpaceHeaterOrNull(heaterId);
+                if (heater == null) return;
+
+                heater.AOEEnabled = enabled;
+                heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(enabled));
+            }
+
+            public void SendPacket(bool enabled, string itemId)
+            {
+                Packet packet = new()
+                {
+                    BoolData = enabled,
+                    StringData = itemId,
+                };
+
+                Send(packet);
             }
         }
     }

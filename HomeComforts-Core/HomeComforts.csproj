@@ -136,7 +136,6 @@
     <Compile Include="Fika\FikaWrapper.cs" />
     <Compile Include="Items\Safehouse\SafehouseFikaWrapper.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeaterAddonData.cs" />
-    <Compile Include="Items\SpaceHeater\SpaceHeaterFikaWrapper.cs" />
     <Compile Include="Helpers\ConfigurationManagerAttributes.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeaterSession.cs" />
