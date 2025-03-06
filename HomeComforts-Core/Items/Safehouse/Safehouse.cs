@@ -1,13 +1,9 @@
-﻿using EFT.InventoryLogic;
-using HomeComforts.Components;
-using HomeComforts.Fika;
+﻿using HomeComforts.Components;
 using HomeComforts.Helpers;
 using LeaveItThere.Addon;
 using LeaveItThere.Common;
 using LeaveItThere.Components;
-using LeaveItThere.Helpers;
 using UnityEngine;
-using static HomeComforts.Items.SpaceHeater.SpaceHeater;
 
 namespace HomeComforts.Items.Safehouse
 {
@@ -99,7 +95,7 @@ namespace HomeComforts.Items.Safehouse
                 AddonData.RemoveProfileId();
             }
 
-            SafehouseEnabledStatePacket.Instance.SendPacket(enabled, FakeItem.LootItem.ItemId);
+            SafehouseEnabledStatePacket.Instance.SendStringAndBool(FakeItem.LootItem.ItemId, enabled);
             NotificationManagerClass.DisplayMessageNotification($"Safehouse Enabled: {SafehouseEnabled}");
         }
 
@@ -117,23 +113,12 @@ namespace HomeComforts.Items.Safehouse
 
                 if (enabled)
                 {
-                    safehouse.AddonData.AddProfileId(SenderProfileId);
+                    safehouse.AddonData.AddProfileId(packet.SenderProfileId);
                 }
                 else
                 {
-                    safehouse.AddonData.RemoveProfileId(SenderProfileId);
+                    safehouse.AddonData.RemoveProfileId(packet.SenderProfileId);
                 }
-            }
-
-            public void SendPacket(bool enabled, string itemId)
-            {
-                Packet packet = new()
-                {
-                    BoolData = enabled,
-                    StringData = itemId,
-                };
-
-                Send(packet);
             }
         }
 
@@ -141,7 +126,7 @@ namespace HomeComforts.Items.Safehouse
         {
             public Safehouse Safehouse { get; private set; } = safehouse;
 
-            public override string Name => Safehouse.SafehouseEnabled 
+            public override string Name => Safehouse.SafehouseEnabled
                                                 ? "Disable Safehouse"
                                                 : "Enabled Safehouse";
             public override bool Enabled => Safehouse.SafehouseEnabled

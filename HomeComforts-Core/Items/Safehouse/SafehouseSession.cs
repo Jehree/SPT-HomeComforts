@@ -1,11 +1,11 @@
-﻿using Comfort.Common;
-using EFT;
+﻿using EFT;
 using HomeComforts;
 using HomeComforts.Components;
-using HomeComforts.Fika;
 using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
+using LeaveItThere.Addon;
 using LeaveItThere.Components;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,22 +88,17 @@ internal class SafehouseSession
     {
         bool profileCleanupNeeded = exitName != "homecomforts_safehouse" && !Settings.AlwaysInfilAtSafehouse.Value;
 
-        if (FikaInterface.IAmHost())
+        if (exitName == "homecomforts_safehouse")
         {
-            if (exitName == "homecomforts_safehouse")
-            {
-                _session.AddonData.AddProfile();
-            }
+            _session.AddonData.AddProfile();
+        }
 
-            if (profileCleanupNeeded)
-            {
-                _session.AddonData.RemoveProfile();
-            }
-        }
-        else
+        if (profileCleanupNeeded)
         {
-            FikaInterface.SendHostSafehouseProfileDataPacket(profileCleanupNeeded);
+            _session.AddonData.RemoveProfile();
         }
+
+        SafehouseProfileDataToHostPacket.Instance.SendPacket(profileCleanupNeeded);
     }
 
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
@@ -111,7 +106,7 @@ internal class SafehouseSession
         HCSession.Instance.CustomSafehouseExfil = SafehouseExfil.Create("homecomforts_safehouse");
         HCSession.Instance.CustomSafehouseExfil.InitCustomExfil();
 
-        exfilController.ExfiltrationPoints = [..exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
+        exfilController.ExfiltrationPoints = [.. exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
     }
 
     public static void OnLastPlacedItemSpawned(FakeItem fakeItem)
@@ -133,9 +128,55 @@ internal class SafehouseSession
             if (_session.AddonData.ContainsProfile())
             {
                 _session.AddonData.RemoveProfile();
-                FikaInterface.SendHostSafehouseProfileDataPacket(true);
+                SafehouseProfileDataToHostPacket.Instance.SendPacket(true);
             }
         }
     }
+
+    public class SafehouseProfileDataToHostPacket : LITPacketRegistration
+    {
+        public struct PData
+        {
+            public Vector3 InfilPosition;
+            public string SafehouseId;
+        }
+
+        public static SafehouseProfileDataToHostPacket Instance { get => Get<SafehouseProfileDataToHostPacket>(); }
+        public override EPacketDestination Destination => EPacketDestination.HostOnly;
+
+        public override void OnPacketReceived(Packet packet)
+        {
+            bool removeProfile = packet.BoolData;
+            PData data = JsonConvert.DeserializeObject<PData>(packet.StringData);
+
+            if (removeProfile)
+            {
+                HCSession.Instance.SafehouseSession.AddonData.RemoveProfile(packet.SenderProfileId);
+            }
+            else
+            {
+                HCSession.Instance.SafehouseSession.AddonData.AddProfile(packet.SenderProfileId, data.InfilPosition, data.SafehouseId);
+            }
+
+            Plugin.DebugLog("eor pak received");
+            Plugin.DebugLog(packet.ByteArrayData?.Length.ToString());
+        }
+
+        public void SendPacket(bool removeProfile)
+        {
+            // if there LastSafehouseThatUsedMe is null, and we aren't removing a profile, there's nothing to update
+            if (!removeProfile && HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe == null) return;
+
+            PData data = new()
+            {
+                InfilPosition = HCSession.Instance.CustomSafehouseExfil.transform.position,
+                SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId
+            };
+
+            SendStringAndBool(JsonConvert.SerializeObject(data), removeProfile);
+            SendByteArray(new byte[] { 0x01, 0x02, 0x03 });
+        }
+    }
+
 }
 

@@ -2,7 +2,6 @@
 using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using HomeComforts.Components;
-using HomeComforts.Fika;
 using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
 using HomeComforts.Items.SpaceHeater;
@@ -51,13 +50,10 @@ namespace HomeComforts
             LITStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
 
             SpaceHeater.SpaceHeaterStatePacket.Instance.Register();
+            Safehouse.SafehouseEnabledStatePacket.Instance.Register();
+            SafehouseSession.SafehouseProfileDataToHostPacket.Instance.Register();
         }
-
-        private void OnEnable()
-        {
-            FikaInterface.InitOnPluginEnabled();
-        }
-
+ 
         public static void DebugLog(string message)
         {
 #if DEBUG

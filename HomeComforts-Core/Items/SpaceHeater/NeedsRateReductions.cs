@@ -3,7 +3,6 @@ using EFT;
 using EFT.HealthSystem;
 using HomeComforts.Components;
 using HomeComforts.Helpers;
-using System;
 using System.Collections;
 using UnityEngine;
 

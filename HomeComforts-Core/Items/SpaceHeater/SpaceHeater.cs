@@ -124,8 +124,7 @@ namespace HomeComforts.Items.SpaceHeater
                     Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.GeneratorTurnOff);
                 }
 
-                SpaceHeaterStatePacket.Instance.SendPacket(Heater.AOEEnabled, FakeItem.ItemId);
-
+                SpaceHeaterStatePacket.Instance.SendStringAndBool(FakeItem.ItemId, Heater.AOEEnabled);
                 Heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(Heater.AOEEnabled));
             }
         }
@@ -133,6 +132,7 @@ namespace HomeComforts.Items.SpaceHeater
 
         public class SpaceHeaterStatePacket : LITPacketRegistration
         {
+            //public SpaceHeaterStatePacket() { Plugin.DebugLog("SpaceHeaterStatePacket constructor"); }
             public static SpaceHeaterStatePacket Instance { get => Get<SpaceHeaterStatePacket>(); }
 
             public override void OnPacketReceived(Packet packet)
@@ -145,17 +145,6 @@ namespace HomeComforts.Items.SpaceHeater
 
                 heater.AOEEnabled = enabled;
                 heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(enabled));
-            }
-
-            public void SendPacket(bool enabled, string itemId)
-            {
-                Packet packet = new()
-                {
-                    BoolData = enabled,
-                    StringData = itemId,
-                };
-
-                Send(packet);
             }
         }
     }
