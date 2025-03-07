@@ -51,7 +51,8 @@ namespace HomeComforts.Items.Safehouse
             {
                 // moving the exfil here now makes it show correctly in Dynamic Maps
                 // unfortunately, if the safehouse radio is moved, the map won't update until the next raid
-                HCSession.Instance.CustomSafehouseExfil.transform.position = transform.position;
+                // we do have to delay it though because this code will run before the exfil is created
+                HCSession.Instance.InitialExfilPosition = transform.position;
                 SetSafehouseEnabled(true);
             }
         }
@@ -154,7 +155,7 @@ namespace HomeComforts.Items.Safehouse
         public class ToggleExfilEnabledInteraction(FakeItem fakeItem, Safehouse safehouse) : CustomInteraction(fakeItem)
         {
             public Safehouse Safehouse { get; private set; } = safehouse;
-            public SafehouseExfil Exfil { get; private set; } = HCSession.Instance.CustomSafehouseExfil;
+            public SafehouseExfil Exfil { get => HCSession.Instance.CustomSafehouseExfil; }
             public override string Name => Exfil.ExfilIsEnabled
                                                     ? "Stop Extracting"
                                                     : "Extract";

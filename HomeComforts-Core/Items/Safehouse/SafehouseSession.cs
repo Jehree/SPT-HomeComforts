@@ -104,6 +104,7 @@ internal class SafehouseSession
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
     {
         HCSession.Instance.CustomSafehouseExfil = SafehouseExfil.Create("homecomforts_safehouse");
+        HCSession.Instance.CustomSafehouseExfil.transform.position = HCSession.Instance.InitialExfilPosition;
         HCSession.Instance.CustomSafehouseExfil.InitCustomExfil();
 
         exfilController.ExfiltrationPoints = [.. exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
