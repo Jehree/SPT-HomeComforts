@@ -95,23 +95,28 @@ namespace HomeComforts.Items.Safehouse
                 AddonData.RemoveProfileId();
             }
 
-            SafehouseEnabledStatePacket.Instance.SendStringAndBool(FakeItem.LootItem.ItemId, enabled);
+            SafehouseEnabledStatePacket.Instance.Send(FakeItem.LootItem.ItemId, enabled);
             NotificationManagerClass.DisplayMessageNotification($"Safehouse Enabled: {SafehouseEnabled}");
         }
 
         public class SafehouseEnabledStatePacket : LITPacketRegistration
         {
+            private class Data
+            {
+                public string SafehouseId;
+                public bool Enabled;
+            }
+
             public static SafehouseEnabledStatePacket Instance { get => Get<SafehouseEnabledStatePacket>(); }
             public override EPacketDestination Destination => EPacketDestination.HostOnly;
             public override void OnPacketReceived(Packet packet)
             {
-                string safehouseId = packet.StringData;
-                bool enabled = packet.BoolData;
+                Data data = packet.GetData<Data>();
 
-                Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(safehouseId);
+                Safehouse safehouse = HCSession.Instance.SafehouseSession.GetSafehouseOrNull(data.SafehouseId);
                 if (safehouse == null) return;
 
-                if (enabled)
+                if (data.Enabled)
                 {
                     safehouse.AddonData.AddProfileId(packet.SenderProfileId);
                 }
@@ -119,6 +124,16 @@ namespace HomeComforts.Items.Safehouse
                 {
                     safehouse.AddonData.RemoveProfileId(packet.SenderProfileId);
                 }
+            }
+
+            public void Send(string safehouseId, bool enabled)
+            {
+                Data data = new()
+                {
+                    SafehouseId = safehouseId,
+                    Enabled = enabled
+                };
+                SendData(data);
             }
         }
 

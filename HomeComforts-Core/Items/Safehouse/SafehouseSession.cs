@@ -98,7 +98,7 @@ internal class SafehouseSession
             _session.AddonData.RemoveProfile();
         }
 
-        SafehouseProfileDataToHostPacket.Instance.SendPacket(profileCleanupNeeded);
+        SafehouseProfileDataToHostPacket.Instance.Send(profileCleanupNeeded);
     }
 
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
@@ -128,17 +128,18 @@ internal class SafehouseSession
             if (_session.AddonData.ContainsProfile())
             {
                 _session.AddonData.RemoveProfile();
-                SafehouseProfileDataToHostPacket.Instance.SendPacket(true);
+                SafehouseProfileDataToHostPacket.Instance.Send(true);
             }
         }
     }
 
     public class SafehouseProfileDataToHostPacket : LITPacketRegistration
     {
-        public struct PData
+        public class Data
         {
             public Vector3 InfilPosition;
             public string SafehouseId;
+            public bool RemoveProfile;
         }
 
         public static SafehouseProfileDataToHostPacket Instance { get => Get<SafehouseProfileDataToHostPacket>(); }
@@ -146,10 +147,9 @@ internal class SafehouseSession
 
         public override void OnPacketReceived(Packet packet)
         {
-            bool removeProfile = packet.BoolData;
-            PData data = JsonConvert.DeserializeObject<PData>(packet.StringData);
+            Data data = packet.GetData<Data>();
 
-            if (removeProfile)
+            if (data.RemoveProfile)
             {
                 HCSession.Instance.SafehouseSession.AddonData.RemoveProfile(packet.SenderProfileId);
             }
@@ -159,22 +159,21 @@ internal class SafehouseSession
             }
 
             Plugin.DebugLog("eor pak received");
-            Plugin.DebugLog(packet.ByteArrayData?.Length.ToString());
         }
 
-        public void SendPacket(bool removeProfile)
+        public void Send(bool removeProfile)
         {
-            // if there LastSafehouseThatUsedMe is null, and we aren't removing a profile, there's nothing to update
+            // if the LastSafehouseThatUsedMe is null, and we aren't removing a profile, there's nothing to update
             if (!removeProfile && HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe == null) return;
 
-            PData data = new()
+            Data data = new()
             {
                 InfilPosition = HCSession.Instance.CustomSafehouseExfil.transform.position,
-                SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId
+                SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId,
+                RemoveProfile = removeProfile,
             };
 
-            SendStringAndBool(JsonConvert.SerializeObject(data), removeProfile);
-            SendByteArray(new byte[] { 0x01, 0x02, 0x03 });
+            SendData(data);
         }
     }
 
