@@ -1,11 +1,11 @@
-﻿using Comfort.Common;
-using EFT;
+﻿using EFT;
 using HomeComforts;
 using HomeComforts.Components;
-using HomeComforts.Fika;
 using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
+using LeaveItThere.Addon;
 using LeaveItThere.Components;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,30 +88,26 @@ internal class SafehouseSession
     {
         bool profileCleanupNeeded = exitName != "homecomforts_safehouse" && !Settings.AlwaysInfilAtSafehouse.Value;
 
-        if (FikaInterface.IAmHost())
+        if (exitName == "homecomforts_safehouse")
         {
-            if (exitName == "homecomforts_safehouse")
-            {
-                _session.AddonData.AddProfile();
-            }
+            _session.AddonData.AddProfile();
+        }
 
-            if (profileCleanupNeeded)
-            {
-                _session.AddonData.RemoveProfile();
-            }
-        }
-        else
+        if (profileCleanupNeeded)
         {
-            FikaInterface.SendHostSafehouseProfileDataPacket(profileCleanupNeeded);
+            _session.AddonData.RemoveProfile();
         }
+
+        SafehouseProfileDataToHostPacket.Instance.Send(profileCleanupNeeded);
     }
 
     public static void InitializeCustomExfil(ExfiltrationControllerClass exfilController)
     {
         HCSession.Instance.CustomSafehouseExfil = SafehouseExfil.Create("homecomforts_safehouse");
+        HCSession.Instance.CustomSafehouseExfil.transform.position = HCSession.Instance.InitialExfilPosition;
         HCSession.Instance.CustomSafehouseExfil.InitCustomExfil();
 
-        exfilController.ExfiltrationPoints = [..exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
+        exfilController.ExfiltrationPoints = [.. exfilController.ExfiltrationPoints, HCSession.Instance.CustomSafehouseExfil];
     }
 
     public static void OnLastPlacedItemSpawned(FakeItem fakeItem)
@@ -133,9 +129,54 @@ internal class SafehouseSession
             if (_session.AddonData.ContainsProfile())
             {
                 _session.AddonData.RemoveProfile();
-                FikaInterface.SendHostSafehouseProfileDataPacket(true);
+                SafehouseProfileDataToHostPacket.Instance.Send(true);
             }
         }
     }
+
+    public class SafehouseProfileDataToHostPacket : LITPacketRegistration
+    {
+        public class Data
+        {
+            public Vector3 InfilPosition;
+            public string SafehouseId;
+            public bool RemoveProfile;
+        }
+
+        public static SafehouseProfileDataToHostPacket Instance { get => Get<SafehouseProfileDataToHostPacket>(); }
+        public override EPacketDestination Destination => EPacketDestination.HostOnly;
+
+        public override void OnPacketReceived(Packet packet)
+        {
+            Data data = packet.GetData<Data>();
+
+            if (data.RemoveProfile)
+            {
+                HCSession.Instance.SafehouseSession.AddonData.RemoveProfile(packet.SenderProfileId);
+            }
+            else
+            {
+                HCSession.Instance.SafehouseSession.AddonData.AddProfile(packet.SenderProfileId, data.InfilPosition, data.SafehouseId);
+            }
+
+            Plugin.DebugLog("eor pak received");
+        }
+
+        public void Send(bool removeProfile)
+        {
+            // if the LastSafehouseThatUsedMe is null, and we aren't removing a profile, there's nothing to update
+            if (!removeProfile && HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe == null) return;
+
+            Data data = new()
+            {
+                InfilPosition = HCSession.Instance.CustomSafehouseExfil.transform.position,
+                SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId,
+                RemoveProfile = removeProfile,
+            };
+
+            SendData(data);
+        }
+    }
+
 }
 

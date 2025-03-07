@@ -22,6 +22,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -132,11 +134,7 @@
     <Compile Include="Components\HCSession.cs" />
     <Compile Include="Items\Safehouse\Safehouse.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeater.cs" />
-    <Compile Include="Fika\FikaInterface.cs" />
-    <Compile Include="Fika\FikaWrapper.cs" />
-    <Compile Include="Items\Safehouse\SafehouseFikaWrapper.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeaterAddonData.cs" />
-    <Compile Include="Items\SpaceHeater\SpaceHeaterFikaWrapper.cs" />
     <Compile Include="Helpers\ConfigurationManagerAttributes.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Items\SpaceHeater\SpaceHeaterSession.cs" />

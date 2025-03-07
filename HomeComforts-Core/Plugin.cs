@@ -2,11 +2,11 @@
 using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using HomeComforts.Components;
-using HomeComforts.Fika;
 using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
 using HomeComforts.Items.SpaceHeater;
 using HomeComforts.Patches;
+using LeaveItThere.Addon;
 using LeaveItThere.Helpers;
 using System.Collections.Generic;
 
@@ -48,13 +48,12 @@ namespace HomeComforts
             LITStaticEvents.OnFakeItemInitialized += SpaceHeater.OnFakeItemInitialized;
             LITStaticEvents.OnLastPlacedItemSpawned += HCSession.OnLastPlacedItemSpawned;
             LITStaticEvents.OnRaidEnd += HCSession.OnRaidEnd;
-        }
 
-        private void OnEnable()
-        {
-            FikaInterface.InitOnPluginEnabled();
+            SpaceHeater.SpaceHeaterStatePacket.Instance.Register();
+            Safehouse.SafehouseEnabledStatePacket.Instance.Register();
+            SafehouseSession.SafehouseProfileDataToHostPacket.Instance.Register();
         }
-
+ 
         public static void DebugLog(string message)
         {
 #if DEBUG
