@@ -144,12 +144,6 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HomeComforts-Packets\HomeComforts-Packets.csproj">
-      <Project>{f2f6a3e6-d43d-4b1a-8a98-05900fda5247}</Project>
-      <Name>HomeComforts-Packets</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
