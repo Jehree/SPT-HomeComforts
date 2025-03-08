@@ -164,15 +164,28 @@ internal class SafehouseSession
 
         public void Send(bool removeProfile)
         {
+            // host will never need to send this packet
+            if (LITFikaTools.IAmHost()) return;
+
             // if the LastSafehouseThatUsedMe is null, and we aren't removing a profile, there's nothing to update
             if (!removeProfile && HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe == null) return;
 
-            Data data = new()
+            Data data = new();
+
+            // sometimes (like when disconnecting via esc menu) the exfil is destroyed too quickly to get data from it
+            // fortunately, these times that data isn't needed anyway because the profile just needs to be removed anyway
+            if (removeProfile)
             {
-                InfilPosition = HCSession.Instance.CustomSafehouseExfil.transform.position,
-                SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId,
-                RemoveProfile = removeProfile,
-            };
+                data.InfilPosition = Vector3.zero;
+                data.SafehouseId = "n/a";
+                data.RemoveProfile = true;
+            }
+            else
+            {
+                data.InfilPosition = HCSession.Instance.CustomSafehouseExfil.transform.position;
+                data.SafehouseId = HCSession.Instance.CustomSafehouseExfil.LastSafehouseThatUsedMe.FakeItem.LootItem.ItemId;
+                data.RemoveProfile = false;
+            }
 
             SendData(data);
         }

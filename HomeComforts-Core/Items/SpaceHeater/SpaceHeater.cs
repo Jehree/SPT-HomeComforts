@@ -36,7 +36,7 @@ namespace HomeComforts.Items.SpaceHeater
             HCSession.Instance.SpaceHeaterSession.SpaceHeaters.Add(heater);
             fakeItem.OnPlacedStateChanged += heater.OnItemPlacedStateChanged;
 
-            fakeItem.Actions.Add(new ToggleSpaceHeaterInteraction(fakeItem, heater));
+            fakeItem.Interactions.Add(new ToggleSpaceHeaterInteraction(fakeItem, heater));
 
             SpaceHeaterAddonData addonData = fakeItem.GetAddonDataOrNull<SpaceHeaterAddonData>(Plugin.AddonDataKey);
             if (addonData != null && addonData.HeaterEnabled)

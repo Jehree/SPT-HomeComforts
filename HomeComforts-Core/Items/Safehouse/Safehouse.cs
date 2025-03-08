@@ -66,8 +66,8 @@ namespace HomeComforts.Items.Safehouse
 
             Safehouse safehouse = fakeItem.gameObject.AddComponent<Safehouse>();
             safehouse.Init(fakeItem);
-            fakeItem.Actions.Add(new ToggleSafehouseEnabledInteraction(fakeItem, safehouse));
-            fakeItem.Actions.Add(new ToggleExfilEnabledInteraction(fakeItem, safehouse));
+            fakeItem.Interactions.Add(new ToggleSafehouseEnabledInteraction(fakeItem, safehouse));
+            fakeItem.Interactions.Add(new ToggleExfilEnabledInteraction(fakeItem, safehouse));
         }
 
         private void Init(FakeItem fakeItem)
@@ -144,7 +144,7 @@ namespace HomeComforts.Items.Safehouse
 
             public override string Name => Safehouse.SafehouseEnabled
                                                 ? "Disable Safehouse"
-                                                : "Enabled Safehouse";
+                                                : "Activate Safehouse";
             public override bool Enabled => Safehouse.SafehouseEnabled
                                                 ? true //always enable interaction when safehouse is enabled so that it can be disabled
                                                 : HCSession.Instance.SafehouseSession.SafehouseEnableAllowed;
