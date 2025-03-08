@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\items\\safehouse\\safehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\safehouse\\safehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\safehouse\\safehouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,7 +19,7 @@
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\spaceheater.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\helpers\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\helpers\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\helpers\\settings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,7 +27,7 @@
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\components\\hcsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|c:\\sp tarkov\\spt3.10.x\\dev\\spt-homecomforts\\homecomforts-core\\items\\spaceheater\\needsratereductions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\homecomforts-core\\items\\spaceheater\\needsratereductions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9076ADE2-F4EE-4B5D-B9A6-29A054CF0A7E}|HomeComforts-Core\\HomeComforts.csproj|solutionrelative:homecomforts-core\\items\\spaceheater\\needsratereductions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "HomeComforts-Core\\Plugin.cs",
               "ToolTip": "C:\\SP Tarkov\\SPT3.10.X\\Dev\\SPT-HomeComforts\\HomeComforts-Core\\Plugin.cs",
               "RelativeToolTip": "HomeComforts-Core\\Plugin.cs",
-              "ViewState": "AQIAADIAAAAAAAAAAAAIwEsAAAAFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T19:57:24.81Z",
               "EditorCaption": ""
@@ -63,8 +63,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Helpers\\Settings.cs",
               "ViewState": "AQIAACwAAAAAAAAAAAAowDYAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T19:39:09.328Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T19:39:09.328Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\SpaceHeater\\NeedsRateReductions.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T18:41:39.202Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T18:41:39.202Z"
             },
             {
               "$type": "Document",
@@ -89,8 +87,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Components\\HCSession.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAAAA4AAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T02:58:57.526Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-07T02:58:57.526Z"
             },
             {
               "$type": "Document",
@@ -102,8 +99,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\Safehouse\\SafehouseSession.cs",
               "ViewState": "AQIAAI4AAAAAAAAAAAAUwJEAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T22:14:04.931Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T22:14:04.931Z"
             },
             {
               "$type": "Document",
@@ -115,8 +111,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\Safehouse\\Safehouse.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAKsAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T22:11:15.385Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T22:11:15.385Z"
             },
             {
               "$type": "Document",
@@ -128,8 +123,7 @@
               "RelativeToolTip": "HomeComforts-Core\\Items\\SpaceHeater\\SpaceHeater.cs",
               "ViewState": "AQIAAHkAAAAAAAAAAAAswJEAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T23:55:59.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-02T23:55:59.155Z"
             }
           ]
         }
