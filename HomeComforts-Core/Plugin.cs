@@ -15,7 +15,7 @@ namespace HomeComforts
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.InteractableExfilsAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.0")]
+    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.1")]
     public class Plugin : BaseUnityPlugin
     {
         public static bool FikaInstalled { get; private set; }

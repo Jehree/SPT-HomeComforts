@@ -13,7 +13,7 @@ namespace HomeComforts.Components
         public SpaceHeaterSession SpaceHeaterSession { get; private set; } = new();
         public NeedsRateReductions NeedsRateReductions { get; private set; } = new();
         public SafehouseExfil CustomSafehouseExfil;
-        public Vector3 InitialExfilPosition = Vector3.zero;
+        public Vector3 InitialExfilPosition = new Vector3(-999999999, -999999999, -999999999);
 
         public GameWorld GameWorld { get; private set; }
 
