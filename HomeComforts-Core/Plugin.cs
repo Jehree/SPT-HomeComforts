@@ -15,12 +15,9 @@ namespace HomeComforts
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.InteractableExfilsAPI", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.1")]
+    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.2")]
     public class Plugin : BaseUnityPlugin
     {
-        public static bool FikaInstalled { get; private set; }
-        public static bool IAmDedicatedClient { get; private set; }
-        public static bool IEAPIInstalled { get; private set; }
         public static ManualLogSource LogSource;
         public static ServerConfig ServerConfig = new();
         public static List<string> AllEntryPoints;
@@ -31,17 +28,14 @@ namespace HomeComforts
 
         private void Awake()
         {
-            FikaInstalled = Chainloader.PluginInfos.ContainsKey("com.fika.core");
-            IAmDedicatedClient = Chainloader.PluginInfos.ContainsKey("com.fika.dedicated");
-            IEAPIInstalled = Chainloader.PluginInfos.ContainsKey("Jehree.InteractableExfilsAPI");
             ServerConfig = LITUtils.ServerRoute<ServerConfig>(ConfigToClient);
             AllEntryPoints = LITUtils.ServerRoute<List<string>>(GetAllEntryPoints);
 
             LogSource = Logger;
             Settings.Init(Config);
 
-            new GameStartedPatch().Enable();
-            new GameEndedPatch().Enable();
+            //new GameStartedPatch().Enable();
+            //new GameEndedPatch().Enable();
             new InitAllExfiltrationPointsPatch().Enable();
 
             LITStaticEvents.OnFakeItemInitialized += Safehouse.OnFakeItemInitialized;

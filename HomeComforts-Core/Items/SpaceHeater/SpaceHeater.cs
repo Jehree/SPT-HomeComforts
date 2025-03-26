@@ -127,6 +127,7 @@ namespace HomeComforts.Items.SpaceHeater
 
                 SpaceHeaterStatePacket.Instance.Send(FakeItem.ItemId, Heater.AOEEnabled);
                 Heater.FakeItem.PutAddonData(Plugin.AddonDataKey, SpaceHeaterAddonData.CreateData(Heater.AOEEnabled));
+                Utils.ForceUpdatePlayerCollisions();
             }
         }
 

@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Items\Safehouse\SafehouseSession.cs" />
     <Compile Include="Items\SpaceHeater\NeedsRateReductions.cs" />
     <Compile Include="Items\Safehouse\SafehouseAddonData.cs" />
