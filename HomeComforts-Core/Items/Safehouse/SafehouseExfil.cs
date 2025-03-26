@@ -1,5 +1,6 @@
 ﻿using EFT;
 using EFT.Interactive;
+using HomeComforts.Helpers;
 using HomeComforts.Items.Safehouse;
 using UnityEngine;
 
@@ -77,6 +78,8 @@ namespace HomeComforts.Components
             {
                 EligibleEntryPoints = [HCSession.Instance.Player.Profile.Info.EntryPoint.ToLower()];
             }
+
+            Utils.ForceUpdatePlayerCollisions();
         }
     }
 }

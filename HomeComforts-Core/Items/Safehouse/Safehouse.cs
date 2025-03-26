@@ -84,7 +84,9 @@ namespace HomeComforts.Items.Safehouse
             if (enabled == SafehouseEnabled) return;
             SafehouseEnabled = enabled;
             FakeItem.Flags.MoveModeDisabled = enabled;
+            FakeItem.Flags.MoveModeDisabledReason = "(Active Safehouse)";
             FakeItem.Flags.ReclaimInteractionDisabled = enabled;
+            FakeItem.Flags.ReclaimInteractionDisabledReason = "(Active Safehouse)";
 
             if (enabled)
             {
