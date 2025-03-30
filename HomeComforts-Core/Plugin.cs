@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using HomeComforts.Components;
 using HomeComforts.Helpers;
@@ -14,8 +13,8 @@ namespace HomeComforts
 {
     [BepInDependency("com.fika.core", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Jehree.InteractableExfilsAPI", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency("Jehree.LeaveItThere", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.2")]
+    [BepInDependency("Jehree.LeaveItThere", "2.0.1")]
+    [BepInPlugin("Jehree.HomeComforts", "HomeComforts", "1.0.3")]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource LogSource;

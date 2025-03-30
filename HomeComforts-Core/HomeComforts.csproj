@@ -125,6 +125,9 @@
     <Reference Include="LeaveItThere">
       <HintPath>..\..\..\BepInEx\plugins\LeaveItThere\LeaveItThere.dll</HintPath>
     </Reference>
+    <Reference Include="spt-custom">
+      <HintPath>..\..\..\BepInEx\plugins\spt\spt-custom.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\Utils.cs" />
