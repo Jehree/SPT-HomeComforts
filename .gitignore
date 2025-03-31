@@ -2,3 +2,4 @@ bin/
 obj/
 HomeComforts-Server/node_modules/
 /*.zip
+/.vs
