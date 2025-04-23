@@ -3,6 +3,10 @@
         {
             "key": "bruceheater.bundle",
             "dependencyKeys": ["assets/commonassets/physics/physicsmaterials.bundle", "cubemaps", "shaders"]
+        },
+        {
+            "key": "sleepingbag.bundle",
+            "dependencyKeys": ["assets/commonassets/physics/physicsmaterials.bundle", "cubemaps", "shaders"]
         }
     ]
 }

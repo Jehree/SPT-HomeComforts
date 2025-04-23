@@ -30,5 +30,21 @@
         "currency": "rub",
         "cost": 48500,
         "fleaPrice": 0
+    },
+    {
+        "id": "67f55773c38a931a30ec005c",
+        "shortName": "Sleeping Bag",
+        "name": "Military Sleeping Bad",
+        "description": "A bag.... for sleeping!",
+        "sizeH": 3,
+        "sizeV": 1,
+        "weight": 3.1,
+        "bundlePath": "sleepingbag.bundle",
+        "traderId": "jaeger",
+        "assortId": "67f557b6d5192663e4db1a9f",
+        "loyaltyLevel": 1,
+        "currency": "rub",
+        "cost": 8900,
+        "fleaPrice": 0
     }
 ]
